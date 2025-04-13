@@ -567,21 +567,41 @@ export default function Shop() {
 
   return (
     <Box sx={{ 
-      minHeight: '100vh', 
-      background: '#000000',
-      pt: 4,
-      pb: 8
+      px: isMobile ? 1 : 2, 
+      py: 0,
+      backgroundColor: theme.palette.background.default,
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 0,
+      mt: 6
     }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{
+        px: { xs: 2, sm: 3, md: 4 },
+        '& .MuiCard-root': {
+          background: theme.palette.background.paper,
+          color: theme.palette.text.primary,
+          border: `1px solid ${theme.palette.divider}`,
+          '&:hover': {
+            borderColor: theme.palette.primary.main,
+          }
+        },
+        '& .MuiTypography-root': {
+          color: theme.palette.text.primary
+        },
+        '& .MuiChip-root': {
+          background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+          color: theme.palette.text.primary
+        }
+      }}>
         {/* Header with Buy Button */}
         <Box sx={{ mb: 6, position: 'relative' }}>
           <Box sx={{ 
-            display: 'flex', 
-            gap: 2, 
             position: 'absolute',
             right: 0,
             top: 0,
-            zIndex: 1
+            zIndex: 1,
+            ...(isMobile ? { display: 'none' } : { display: 'flex', gap: 2 })
           }}>
             <Button
               variant="outlined"
@@ -591,11 +611,11 @@ export default function Shop() {
                 document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
               }}
               sx={{
-                color: '#FFD700',
-                borderColor: 'rgba(255,215,0,0.2)',
+                color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.2)',
                 '&:hover': {
-                  borderColor: '#FFD700',
-                  background: 'rgba(255,215,0,0.1)'
+                  borderColor: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                  background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.05)'
                 }
               }}
             >
@@ -603,18 +623,13 @@ export default function Shop() {
             </Button>
           </Box>
           <Typography 
-            variant="h1" 
-            sx={{
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
-              fontWeight: 800,
-              color: '#fff',
-              mb: 2,
-              letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              textAlign: 'left',
-              maxWidth: '600px'
+            variant="h4" 
+            sx={{ 
+              color: '#FCC200',
+              mb: isMobile ? 2 : 3, 
+              fontWeight: 800, 
+              fontSize: isMobile ? '1.5rem' : '2rem',
+              px: isMobile ? 1 : 0
             }}
           >
             Shopping
@@ -624,26 +639,56 @@ export default function Shop() {
               color: 'rgba(255,255,255,0.7)',
               fontSize: '1.1rem',
               maxWidth: '600px',
-              textAlign: 'left'
+              textAlign: 'left',
+              mb: isMobile ? 3 : 0
             }}
           >
             Discover exclusive items inside Meta Mansion
           </Typography>
+          
+          {/* Mobile View Listed Items Button */}
+          {isMobile && (
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 2,
+              mt: 2
+            }}>
+              <Button
+                variant="outlined"
+                startIcon={<ShoppingBagIcon />}
+                onClick={() => {
+                  setViewTab(0);
+                  document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                sx={{
+                  color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                  borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.2)',
+                  '&:hover': {
+                    borderColor: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                    background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.05)'
+                  }
+                }}
+              >
+                View Listed Items
+              </Button>
+            </Box>
+          )}
         </Box>
 
         {/* Mansions Grid */}
         <Grid container spacing={3} sx={{ mt: 2 }}>
           {mansions.map((mansion) => (
             <Grid item xs={12} sm={6} md={4} key={mansion.id}>
-              <Card sx={{ 
-                height: '100%',
-                background: 'rgba(255, 255, 255, 0.05)',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 4px 20px rgba(255, 215, 0, 0.2)',
-                },
-              }}>
+              <Card
+                sx={{
+                  background: 'rgba(255,255,255,0.05)',
+                  borderRadius: { xs: '16px', sm: '24px' },
+                  p: { xs: 2, sm: 3 },
+                  border: '1px solid rgba(255,215,0,0.2)',
+                  width: '100%',
+                  overflow: 'hidden'
+                }}
+              >
                 <CardMedia
                   component="img"
                   height="200"
@@ -696,7 +741,6 @@ export default function Shop() {
           PaperProps={{
             sx: {
               background: 'rgba(0, 0, 0, 0.7)',
-              backdropFilter: 'blur(8px)',
               border: '1px solid rgba(255, 215, 0, 0.2)',
               borderRadius: 2,
               minWidth: '300px',
@@ -828,7 +872,6 @@ export default function Shop() {
             sx: {
               background: 'rgba(0,0,0,0.95)',
               border: '1px solid rgba(255,215,0,0.2)',
-              backdropFilter: 'blur(10px)',
               color: '#fff'
             }
           }}

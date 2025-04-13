@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, Typography, Grid, Card, Button, IconButton } from '@mui/material';
+import { Box, Container, Typography, Grid, Card, Button, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import { PlayArrow, Star, ArrowForward, Favorite, Share, EmojiEvents, Timer, Group, TrendingUp } from '@mui/icons-material';
 
 export default function Play() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const carouselData = [
     {
@@ -85,46 +87,114 @@ export default function Play() {
     }
   ];
 
+  const aiAgents = [
+    {
+      id: 1,
+      name: "CryptoKing",
+      image: "/images/gaming/agents/agent1.jpg",
+      rating: 0.00,
+      players: "0.00 playing",
+      category: "AI-Agent"
+    },
+    {
+      id: 2,
+      name: "MetaMaster",
+      image: "/images/gaming/agents/agent2.jpg",
+      rating: 0.00,
+      players: "0.00 playing",
+      category: "AI-Agent"
+    },
+    {
+      id: 3,
+      name: "GamePro",
+      image: "/images/gaming/agents/agent3.jpg",
+      rating: 0.00,
+      players: "0.00 playing",
+      category: "AI-Agent"
+    },
+    {
+      id: 4,
+      name: "MansionLord",
+      image: "/images/gaming/agents/agent4.jpg",
+      rating: 0.00,
+      players: "0.00 playing",
+      category: "AI-Agent"
+    },
+    {
+      id: 5,
+      name: "PropertyQueen",
+      image: "/images/gaming/agents/agent5.jpg",
+      rating: 0.00,
+      players: "0.00 playing",
+      category: "AI-Agent"
+    }
+  ];
+
   return (
-    <Box sx={{
+    <Box sx={{ 
+      px: isMobile ? 1 : 2, 
+      py: 0,
+      backgroundColor: theme.palette.background.default,
       minHeight: '100vh',
-      background: '#000000',
-      pt: 4,
-      pb: 8
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 0,
+      mt: 6
     }}>
-      <Container maxWidth="xl">
+      <Container 
+        maxWidth="xl" 
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          '& .MuiCard-root': {
+            background: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            border: `1px solid ${theme.palette.divider}`,
+            '&:hover': {
+              borderColor: theme.palette.primary.main,
+            }
+          },
+          '& .MuiTypography-root': {
+            color: theme.palette.text.primary
+          }
+        }}
+      >
         {/* Stats Section */}
         <Box sx={{ 
-          mb: 8,
+          mb: { xs: 4, sm: 8 },
           display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
           justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: 4,
-          flexWrap: 'wrap'
+          alignItems: { xs: 'flex-start', sm: 'center' },
+          gap: { xs: 3, sm: 4 },
+          flexWrap: 'wrap',
+          width: '100%',
+          overflow: 'hidden'
         }}>
           {/* Hero Section */}
-          <Box sx={{ flex: 1 }}>
+          <Box sx={{ flex: 1, width: '100%', overflow: 'hidden' }}>
             <Typography 
               variant="h1" 
               sx={{
-                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
                 fontWeight: 800,
-                color: '#fff',
+                color: theme.palette.mode === 'dark' ? '#fff' : '#000000',
                 mb: 2,
                 letterSpacing: '-0.02em',
-                background: 'linear-gradient(90deg, #FFFFFF 0%, #FDEB91 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'normal',
+                overflow: 'visible',
+                textOverflow: 'clip',
+                width: '100%',
+                maxWidth: 'none',
+                wordBreak: 'normal'
               }}
             >
-              Play & Earn with Meta Mansions
+              Play & Earn with Meta Mansion
             </Typography>
             <Typography 
               sx={{
                 color: 'rgba(255,255,255,0.7)',
-                fontSize: '1rem',
-                maxWidth: '400px',
+                fontSize: { xs: '0.9rem', sm: '1rem' },
+                maxWidth: '100%',
                 mb: 0
               }}
             >
@@ -133,17 +203,23 @@ export default function Play() {
           </Box>
 
           {/* Stats Cards */}
-          <Box sx={{ display: 'flex', gap: 2, flex: 1, justifyContent: 'flex-end' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: { xs: 1, sm: 2 }, 
+            flex: { xs: '0 0 100%', sm: 1 }, 
+            justifyContent: { xs: 'space-between', sm: 'flex-end' },
+            width: '100%',
+            overflow: 'hidden'
+          }}>
             {/* ETH Earned */}
             <Card
               sx={{
                 background: 'rgba(255,255,255,0.05)',
                 borderRadius: '12px',
                 p: 1,
-                minWidth: 160,
+                minWidth: { xs: '48%', sm: 160 },
                 height: 60,
                 border: '1px solid rgba(255,215,0,0.2)',
-                backdropFilter: 'blur(10px)',
                 '&:hover': {
                   transform: 'translateY(-4px)',
                   transition: 'transform 0.3s ease'
@@ -175,12 +251,9 @@ export default function Play() {
                 </Box>
                 <Typography
                   sx={{
-                    color: '#fff',
+                    color: theme.palette.mode === 'dark' ? '#fff' : '#000',
                     fontSize: '1rem',
                     fontWeight: 700,
-                    background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
                     ml: 2
                   }}
                 >
@@ -195,10 +268,9 @@ export default function Play() {
                 background: 'rgba(255,255,255,0.05)',
                 borderRadius: '12px',
                 p: 1,
-                minWidth: 160,
+                minWidth: { xs: '48%', sm: 160 },
                 height: 60,
                 border: '1px solid rgba(255,215,0,0.2)',
-                backdropFilter: 'blur(10px)',
                 '&:hover': {
                   transform: 'translateY(-4px)',
                   transition: 'transform 0.3s ease'
@@ -230,12 +302,9 @@ export default function Play() {
                 </Box>
                 <Typography
                   sx={{
-                    color: '#fff',
+                    color: theme.palette.mode === 'dark' ? '#fff' : '#000',
                     fontSize: '1rem',
-                    fontWeight: 700,
-                    background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    fontWeight: 700
                   }}
                 >
                   0.00
@@ -245,19 +314,18 @@ export default function Play() {
           </Box>
         </Box>
 
-      
-
         {/* Featured Games */}
-        <Box sx={{ mb: 6 }}>
+        <Box sx={{ mb: { xs: 4, sm: 6 }, width: '100%', overflow: 'hidden' }}>
           {/* Carousel Section */}
-          <Box sx={{ mb: 6 }}>
+          <Box sx={{ mb: { xs: 4, sm: 6 }, width: '100%', overflow: 'hidden' }}>
             <Card
               sx={{
-                background: 'rgba(255,255,255,0.05)',
-                borderRadius: '24px',
+                background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+                borderRadius: { xs: '16px', sm: '24px' },
                 overflow: 'hidden',
                 position: 'relative',
-                height: '400px',
+                height: { xs: '250px', sm: '350px', md: '400px' },
+                width: '100%',
                 '&:hover': {
                   '& .carousel-image': {
                     transform: 'scale(1.1)'
@@ -271,8 +339,8 @@ export default function Play() {
                   right: 0,
                   bottom: 0,
                   border: '2px solid transparent',
-                  borderRadius: '24px',
-                  background: 'linear-gradient(90deg, #fff, transparent) border-box',
+                  borderRadius: { xs: '16px', sm: '24px' },
+                  background: theme.palette.mode === 'dark' ? 'linear-gradient(90deg, #fff, transparent) border-box' : 'linear-gradient(90deg, #000, transparent) border-box',
                   WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
                   WebkitMaskComposite: 'destination-out',
                   maskComposite: 'exclude',
@@ -332,24 +400,29 @@ export default function Play() {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.95) 100%)',
+                  background: theme.palette.mode === 'dark' 
+                    ? 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.95) 100%)'
+                    : 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.95) 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexDirection: 'column',
-                  gap: 2,
-                  padding: 4
+                  gap: { xs: 1, sm: 2 },
+                  padding: { xs: 2, sm: 4 }
                 }}
               >
                 <Typography
                   variant="h3"
                   sx={{
-                    color: '#fff',
-                    fontSize: '2.5rem',
+                    color: '#fff !important',
+                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                     fontFamily: 'STEELAR, sans-serif',
                     textAlign: 'center',
                     fontWeight: 400,
-                    mb: 2
+                    mb: { xs: 1, sm: 2 },
+                    maxWidth: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
                   }}
                 >
                   {carouselData[currentSlide].title}
@@ -358,25 +431,28 @@ export default function Play() {
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 3,
-                    opacity: 0.9
+                    gap: { xs: 2, sm: 3 },
+                    opacity: 0.9,
+                    flexWrap: { xs: 'wrap', sm: 'nowrap' },
+                    justifyContent: 'center',
+                    width: '100%'
                   }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Group sx={{ color: '#FFD700', fontSize: 20 }} />
-                    <Typography sx={{ color: '#fff', fontSize: '0.9rem' }}>
+                    <Group sx={{ color: '#FFD700', fontSize: { xs: 16, sm: 20 } }} />
+                    <Typography sx={{ color: '#fff !important', fontSize: { xs: '0.8rem', sm: '0.9rem' } }}>
                       0.00 Players
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Star sx={{ color: '#FFD700', fontSize: 20 }} />
-                    <Typography sx={{ color: '#fff', fontSize: '0.9rem' }}>
+                    <Star sx={{ color: '#FFD700', fontSize: { xs: 16, sm: 20 } }} />
+                    <Typography sx={{ color: '#fff !important', fontSize: { xs: '0.8rem', sm: '0.9rem' } }}>
                       0.00 Rating
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <EmojiEvents sx={{ color: '#FFD700', fontSize: 20 }} />
-                    <Typography sx={{ color: '#fff', fontSize: '0.9rem' }}>
+                    <EmojiEvents sx={{ color: '#FFD700', fontSize: { xs: 16, sm: 20 } }} />
+                    <Typography sx={{ color: '#fff !important', fontSize: { xs: '0.8rem', sm: '0.9rem' } }}>
                       0.00 META
                     </Typography>
                   </Box>
@@ -386,14 +462,14 @@ export default function Play() {
           </Box>
 
           {/* Game Cards Grid */}
-          <Grid container spacing={6}>
+          <Grid container spacing={{ xs: 2, sm: 4, md: 6 }} sx={{ width: '100%', margin: 0 }}>
             {games.map((game) => (
-              <Grid item xs={12} sm={6} md={4} key={game.id}>
+              <Grid item xs={12} sm={6} md={4} key={game.id} sx={{ padding: { xs: '0 0 16px 0', sm: '0 16px 16px 0' } }}>
                 <Card
                   sx={{
                     width: '100%',
-                    background: 'rgba(255,255,255,0.05)',
-                    borderRadius: '24px',
+                    background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+                    borderRadius: { xs: '16px', sm: '24px' },
                     overflow: 'hidden',
                     transition: 'transform 0.3s ease',
                     '&:hover': {
@@ -404,7 +480,7 @@ export default function Play() {
                   <Box
                     sx={{
                       position: 'relative',
-                      height: 180,
+                      height: { xs: 140, sm: 160, md: 180 },
                       overflow: 'hidden'
                     }}
                   >
@@ -419,27 +495,31 @@ export default function Play() {
                       }}
                     />
                   </Box>
-                  <Box sx={{ p: 2 }}>
+                  <Box sx={{ p: { xs: 1.5, sm: 2 } }}>
                     <Typography
                       variant="h6"
                       sx={{
                         color: '#fff',
                         mb: 1,
-                        fontWeight: 600
+                        fontWeight: 600,
+                        fontSize: { xs: '1rem', sm: '1.25rem' },
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
                       }}
                     >
                       {game.title}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                      <Star sx={{ color: '#FFD700', fontSize: 20 }} />
-                      <Typography sx={{ color: '#fff', fontSize: '0.875rem' }}>
+                      <Star sx={{ color: '#FFD700', fontSize: { xs: 16, sm: 20 } }} />
+                      <Typography sx={{ color: '#fff', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                         {game.rating}
                       </Typography>
-                      <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', ml: 'auto' }}>
+                      <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.75rem', sm: '0.875rem' }, ml: 'auto' }}>
                         {game.players}
                       </Typography>
                     </Box>
-                    <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem', mb: 2 }}>
+                    <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.75rem', sm: '0.875rem' }, mb: 2 }}>
                       {game.category}
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1 }}>
@@ -450,9 +530,9 @@ export default function Play() {
                           background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)',
                           borderRadius: '8px',
                           textTransform: 'none',
-                          py: 0.75,
-                          px: 2,
-                          fontSize: '0.875rem',
+                          py: { xs: 0.5, sm: 0.75 },
+                          px: { xs: 1.5, sm: 2 },
+                          fontSize: { xs: '0.75rem', sm: '0.875rem' },
                           '&:hover': {
                             background: 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)',
                           }
@@ -463,9 +543,12 @@ export default function Play() {
                       <IconButton
                         size="small"
                         sx={{
-                          color: '#fff',
-                          background: 'rgba(255,215,0,0.1)',
-                          '&:hover': { background: 'rgba(255,215,0,0.2)' }
+                          color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.5)',
+                          background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.05)',
+                          '&:hover': { 
+                            background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)',
+                            color: theme.palette.mode === 'dark' ? '#fff' : '#000'
+                          }
                         }}
                       >
                         <Favorite fontSize="small" />
@@ -473,9 +556,12 @@ export default function Play() {
                       <IconButton
                         size="small"
                         sx={{
-                          color: '#fff',
-                          background: 'rgba(255,215,0,0.1)',
-                          '&:hover': { background: 'rgba(255,215,0,0.2)' }
+                          color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.5)',
+                          background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.05)',
+                          '&:hover': { 
+                            background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)',
+                            color: theme.palette.mode === 'dark' ? '#fff' : '#000'
+                          }
                         }}
                       >
                         <Share fontSize="small" />
@@ -489,41 +575,38 @@ export default function Play() {
         </Box>
 
         {/* Categories */}
-        <Box>
+        <Box sx={{ width: '100%', overflow: 'hidden' }}>
           <Box sx={{ 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between', 
-            mb: 6,
-            position: 'relative'
+            mb: { xs: 3, sm: 6 },
+            position: 'relative',
+            width: '100%'
           }}>
             <Typography 
               variant="h5" 
               sx={{ 
-                color: '#fff',
+                color: theme.palette.mode === 'dark' ? '#fff' : '#000',
                 fontWeight: 700,
-                fontSize: '2rem',
-                background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                fontSize: { xs: '1.25rem', sm: '1.5rem' }
               }}
             >
               Categories
             </Typography>
           </Box>
 
-          <Grid container spacing={4}>
+          <Grid container spacing={{ xs: 2, sm: 3, md: 4 }} sx={{ width: '100%', margin: 0 }}>
             {categories.map((category, index) => (
-              <Grid item xs={12} sm={6} md={4} key={category.id}>
+              <Grid item xs={6} sm={6} md={3} key={category.id} sx={{ padding: { xs: '0 0 16px 0', sm: '0 16px 16px 0' } }}>
                 <Card
                   sx={{
-                    background: 'rgba(255,255,255,0.05)',
-                    borderRadius: '24px',
+                    background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+                    borderRadius: { xs: '16px', sm: '24px' },
                     overflow: 'hidden',
                     transition: 'all 0.3s ease',
                     position: 'relative',
-                    height: 200,
+                    height: { xs: 140, sm: 160, md: 200 },
                     width: '100%',
                     '&:hover': {
                       transform: 'translateY(-8px)',
@@ -531,7 +614,7 @@ export default function Play() {
                         transform: 'scale(1.1)'
                       },
                       '& .category-overlay': {
-                        background: `linear-gradient(to top, #FFD700CC, transparent)`
+                        background: theme.palette.mode === 'dark' ? 'linear-gradient(to top, #FFD700CC, transparent)' : 'linear-gradient(to top, #000000CC, transparent)'
                       }
                     },
                     '&::before': {
@@ -541,8 +624,8 @@ export default function Play() {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      border: '1px solid rgba(255,215,0,0.2)',
-                      borderRadius: '24px',
+                      border: theme.palette.mode === 'dark' ? '1px solid rgba(255,215,0,0.2)' : '1px solid rgba(0,0,0,0.2)',
+                      borderRadius: { xs: '16px', sm: '24px' },
                       zIndex: 1
                     }
                   }}
@@ -570,7 +653,7 @@ export default function Play() {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      background: `linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.98) 100%)`,
+                      background: theme.palette.mode === 'dark' ? 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.98) 100%)' : 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.98) 100%)',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
@@ -578,19 +661,23 @@ export default function Play() {
                       gap: 1,
                       zIndex: 2,
                       textAlign: 'center',
-                      padding: 3,
+                      padding: { xs: 1.5, sm: 3 },
                       opacity: 0.95
                     }}
                   >
                     <Typography 
                       variant="h6" 
                       sx={{ 
-                        color: '#fff',
+                        color: '#fff !important',
                         fontWeight: 700,
-                        fontSize: '1.5rem',
+                        fontSize: { xs: '1.1rem', sm: '1.5rem' },
                         lineHeight: 1.2,
                         textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                        mb: 1
+                        mb: 1,
+                        maxWidth: '100%',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
                       }}
                     >
                       {category.title}
@@ -599,7 +686,7 @@ export default function Play() {
                       sx={{
                         background: 'rgba(255,215,0,0.2)',
                         borderRadius: '12px',
-                        px: 1.5,
+                        px: { xs: 1, sm: 1.5 },
                         py: 0.5,
                         whiteSpace: 'nowrap',
                         border: '1px solid rgba(255,215,0,0.3)',
@@ -608,8 +695,8 @@ export default function Play() {
                     >
                       <Typography 
                         sx={{ 
-                          color: '#FFD700',
-                          fontSize: '0.875rem',
+                          color: '#FFD700 !important',
+                          fontSize: { xs: '0.75rem', sm: '0.875rem' },
                           fontWeight: 600,
                           textShadow: '0 1px 2px rgba(0,0,0,0.2)'
                         }}
@@ -623,11 +710,11 @@ export default function Play() {
                       gap: 1,
                       justifyContent: 'center'
                     }}>
-                      <TrendingUp sx={{ color: '#FFD700', fontSize: 16 }} />
+                      <TrendingUp sx={{ color: '#FFD700', fontSize: { xs: 14, sm: 16 } }} />
                       <Typography 
                         sx={{ 
-                          color: 'rgba(255,255,255,0.9)',
-                          fontSize: '0.875rem',
+                          color: 'rgba(255,255,255,0.9) !important',
+                          fontSize: { xs: '0.75rem', sm: '0.875rem' },
                           fontWeight: 500
                         }}
                       >
@@ -642,24 +729,21 @@ export default function Play() {
         </Box>
 
         {/* Leaderboard Section */}
-        <Box sx={{ mt: 10 }}>
+        <Box sx={{ mt: { xs: 3, sm: 4 }, width: '100%', overflow: 'hidden' }}>
           <Box sx={{ 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between', 
-            mb: 6,
-            position: 'relative'
+            mb: { xs: 3, sm: 6 },
+            position: 'relative',
+            width: '100%'
           }}>
             <Typography 
               variant="h5" 
               sx={{ 
-                color: '#fff',
+                color: theme.palette.mode === 'dark' ? '#fff' : '#000',
                 fontWeight: 700,
-                fontSize: '2rem',
-                background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                fontSize: { xs: '1.25rem', sm: '1.5rem' }
               }}
             >
               Top Players
@@ -668,14 +752,15 @@ export default function Play() {
 
           <Card
             sx={{
-              background: 'rgba(255,255,255,0.05)',
-              borderRadius: '24px',
-              p: 3,
-              border: '1px solid rgba(255,215,0,0.2)',
-              backdropFilter: 'blur(10px)'
+              background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+              borderRadius: { xs: '16px', sm: '24px' },
+              p: { xs: 2, sm: 3 },
+              border: theme.palette.mode === 'dark' ? '1px solid rgba(255,215,0,0.2)' : '1px solid rgba(0,0,0,0.2)',
+              width: '100%',
+              overflow: 'hidden'
             }}
           >
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 1.5, sm: 2 }, width: '100%' }}>
               {[
                 { rank: 1, name: "CryptoKing", rewards: "234.56 ETH", games: 156 },
                 { rank: 2, name: "MetaMaster", rewards: "198.32 ETH", games: 142 },
@@ -688,46 +773,51 @@ export default function Play() {
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 3,
-                    p: 2,
-                    borderRadius: '16px',
+                    gap: { xs: 2, sm: 3 },
+                    p: { xs: 1.5, sm: 2 },
+                    borderRadius: { xs: '12px', sm: '16px' },
                     background: player.rank <= 3 ? 'rgba(255,215,0,0.05)' : 'transparent',
                     border: player.rank <= 3 ? '1px solid rgba(255,215,0,0.2)' : 'none',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       background: 'rgba(255,215,0,0.05)',
                       transform: 'translateX(8px)'
-                    }
+                    },
+                    width: '100%'
                   }}
                 >
                   <Box
                     sx={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: '12px',
+                      width: { xs: 32, sm: 40 },
+                      height: { xs: 32, sm: 40 },
+                      borderRadius: { xs: '8px', sm: '12px' },
                       background: player.rank <= 3 ? 'rgba(255,215,0,0.1)' : 'rgba(255,255,255,0.1)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      border: player.rank <= 3 ? '1px solid rgba(255,215,0,0.3)' : 'none'
+                      border: player.rank <= 3 ? '1px solid rgba(255,215,0,0.3)' : 'none',
+                      flexShrink: 0
                     }}
                   >
                     <Typography
                       sx={{
                         color: player.rank <= 3 ? '#FFD700' : '#fff',
                         fontWeight: 700,
-                        fontSize: '1.1rem'
+                        fontSize: { xs: '0.9rem', sm: '1.1rem' }
                       }}
                     >
                       #{player.rank}
                     </Typography>
                   </Box>
-                  <Box sx={{ flex: 1 }}>
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
                     <Typography
                       sx={{
                         color: '#fff',
                         fontWeight: 600,
-                        fontSize: '1.1rem'
+                        fontSize: { xs: '0.9rem', sm: '1.1rem' },
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
                       }}
                     >
                       {player.name}
@@ -735,7 +825,7 @@ export default function Play() {
                     <Typography
                       sx={{
                         color: 'rgba(255,255,255,0.7)',
-                        fontSize: '0.875rem'
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' }
                       }}
                     >
                       {player.games} games played
@@ -744,17 +834,18 @@ export default function Play() {
                   <Box
                     sx={{
                       background: 'rgba(255,215,0,0.1)',
-                      borderRadius: '12px',
-                      px: 2,
-                      py: 1,
-                      border: '1px solid rgba(255,215,0,0.2)'
+                      borderRadius: { xs: '8px', sm: '12px' },
+                      px: { xs: 1.5, sm: 2 },
+                      py: { xs: 0.5, sm: 1 },
+                      border: '1px solid rgba(255,215,0,0.2)',
+                      flexShrink: 0
                     }}
                   >
                     <Typography
                       sx={{
                         color: '#FFD700',
                         fontWeight: 700,
-                        fontSize: '1.1rem'
+                        fontSize: { xs: '0.9rem', sm: '1.1rem' }
                       }}
                     >
                       {player.rewards}

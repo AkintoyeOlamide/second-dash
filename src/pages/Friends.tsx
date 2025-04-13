@@ -214,11 +214,14 @@ export default function Friends() {
 
   return (
     <Box sx={{ 
+      minHeight: '100vh',
+      background: theme => theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+      pt: 10,
       maxWidth: 1400, 
       mx: 'auto', 
       px: 2,
-      filter: createCommunityDialogOpen ? 'blur(5px)' : 'none',
-      transition: 'filter 0.3s ease',
+      filter: 'none',
+      transition: 'filter 0.3s ease-in-out',
       pointerEvents: createCommunityDialogOpen ? 'none' : 'auto'
     }}>
       {/* Header */}
@@ -228,11 +231,11 @@ export default function Friends() {
             <Typography 
               variant="h1" 
               sx={{
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                fontSize: { xs: '1.2rem', md: '2.2rem' },
                 fontWeight: 800,
-                color: '#fff',
+                color: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
                 mb: 2,
-                background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
+                background: theme => theme.palette.mode === 'dark' ? 'linear-gradient(90deg, #ffffff 0%, #cccccc 100%)' : 'linear-gradient(90deg, #000000 0%, #333333 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 textAlign: 'left'
@@ -243,7 +246,7 @@ export default function Friends() {
             <Typography 
               sx={{ 
                 color: 'rgba(255,255,255,0.7)',
-                fontSize: '1.1rem',
+                fontSize: { xs: '0.7rem', sm: '1.1rem' },
                 maxWidth: '600px',
                 textAlign: 'left'
               }}
@@ -257,10 +260,11 @@ export default function Friends() {
             onClick={handleCreateCommunityOpen}
             sx={{
               background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)',
-              color: '#000',
+              color: '#000000',
               fontWeight: 600,
-              px: 3,
-              py: 1,
+              px: 1,
+              py: 0.5,
+              fontSize: { xs: '0.7rem', sm: '0.75rem' },
               '&:hover': {
                 background: 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)',
               }
@@ -278,13 +282,13 @@ export default function Friends() {
           onChange={handleTabChange}
           sx={{
             '& .MuiTab-root': {
-              color: 'rgba(255,255,255,0.7)',
+              color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666666',
               '&.Mui-selected': {
-                color: '#FFD700',
+                color: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
               },
             },
             '& .MuiTabs-indicator': {
-              backgroundColor: '#FFD700',
+              backgroundColor: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
             },
           }}
         >
@@ -316,22 +320,22 @@ export default function Friends() {
                     alt={community.name}
                   />
                   <CardContent>
-                    <Typography variant="h6" sx={{ color: '#FFD700', fontWeight: 'bold', mb: 1 }}>
+                    <Typography variant="h6" sx={{ color: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000', fontWeight: 'bold', mb: 1, fontSize: { xs: '0.8rem', sm: '1rem' } }}>
                       {community.name}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 2 }}>
+                    <Typography variant="body2" sx={{ color: '#666666', mb: 2, fontSize: { xs: '0.65rem', sm: '0.875rem' } }}>
                       {community.description}
                     </Typography>
                     <Stack direction="row" spacing={2} alignItems="center">
                       <Chip 
-                        icon={<CommunityIcon sx={{ color: '#FFD700' }} />}
+                        icon={<CommunityIcon sx={{ color: '#666666' }} />}
                         label={`${community.members} members`}
                         sx={{ 
-                          backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                          color: '#FFD700',
+                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          color: '#666666',
                         }}
                       />
-                      <Typography variant="body2" sx={{ color: '#FFD700' }}>
+                      <Typography variant="body2" sx={{ color: '#666666' }}>
                         {community.totalEarnings}
                       </Typography>
                     </Stack>
@@ -373,10 +377,10 @@ export default function Friends() {
                       />
                     </Box>
                     <Box>
-                      <Typography variant="h6" sx={{ color: '#fff', fontWeight: 'bold' }}>
+                      <Typography variant="h6" sx={{ color: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000', fontWeight: 'bold', fontSize: { xs: '0.8rem', sm: '1rem' } }}>
                         {friend.name}
                       </Typography>
-                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                      <Typography variant="body2" sx={{ color: '#666666', fontSize: { xs: '0.65rem', sm: '0.875rem' } }}>
                         Last active: {friend.lastActive}
                       </Typography>
                     </Box>
@@ -384,18 +388,18 @@ export default function Friends() {
                   <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 2 }} />
                   <Stack spacing={1}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                      <Typography variant="body2" sx={{ color: '#666666', fontSize: { xs: '0.65rem', sm: '0.875rem' } }}>
                         Total Earnings
                       </Typography>
-                      <Typography variant="body1" sx={{ color: '#FFD700', fontWeight: 'bold' }}>
+                      <Typography variant="body1" sx={{ color: '#666666', fontWeight: 'bold', fontSize: { xs: '0.7rem', sm: '0.875rem' } }}>
                         {friend.earnings}
                       </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                      <Typography variant="body2" sx={{ color: '#666666', fontSize: { xs: '0.65rem', sm: '0.875rem' } }}>
                         Mansions Owned
                       </Typography>
-                      <Typography variant="body1" sx={{ color: '#FFD700' }}>
+                      <Typography variant="body1" sx={{ color: '#666666', fontSize: { xs: '0.7rem', sm: '0.875rem' } }}>
                         {friend.mansions}
                       </Typography>
                     </Box>
@@ -406,11 +410,11 @@ export default function Friends() {
                       size="small"
                       sx={{
                         flex: 1,
-                        color: '#FFD700',
-                        borderColor: 'rgba(255,215,0,0.3)',
+                        color: '#666666',
+                        borderColor: 'rgba(0,0,0,0.3)',
                         '&:hover': {
-                          borderColor: '#FFD700',
-                          backgroundColor: 'rgba(255,215,0,0.1)',
+                          borderColor: '#666666',
+                          backgroundColor: 'rgba(0,0,0,0.1)',
                         },
                       }}
                     >
@@ -421,11 +425,11 @@ export default function Friends() {
                       size="small"
                       sx={{
                         flex: 1,
-                        color: '#FFD700',
-                        borderColor: 'rgba(255,215,0,0.3)',
+                        color: '#666666',
+                        borderColor: 'rgba(0,0,0,0.3)',
                         '&:hover': {
-                          borderColor: '#FFD700',
-                          backgroundColor: 'rgba(255,215,0,0.1)',
+                          borderColor: '#666666',
+                          backgroundColor: 'rgba(0,0,0,0.1)',
                         },
                       }}
                     >
@@ -448,19 +452,21 @@ export default function Friends() {
                   p: 2,
                   background: 'rgba(255, 255, 255, 0.05)',
                   backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 215, 0, 0.1)',
+                  border: '1px solid rgba(0, 0, 0, 0.1)',
                 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <Avatar src={activity.avatar} />
                   <Box sx={{ flex: 1 }}>
-                    <Typography variant="body1" sx={{ color: '#fff' }}>
+                    <Typography variant="body1" sx={{ color: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000', fontSize: { xs: '0.7rem', sm: '0.875rem' } }}>
                       <span style={{ fontWeight: 'bold' }}>{activity.user}</span>
                       {' '}{activity.action}{' '}
-                      <span style={{ color: '#FFD700' }}>{activity.item}</span>
+                      <Box component="span" sx={{ color: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000' }}>
+                        {activity.item}
+                      </Box>
                       {activity.price && ` for ${activity.price}`}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                    <Typography variant="body2" sx={{ color: '#666666', fontSize: { xs: '0.65rem', sm: '0.875rem' } }}>
                       {activity.time}
                     </Typography>
                   </Box>
@@ -487,14 +493,19 @@ export default function Friends() {
       <Dialog 
         open={createCommunityDialogOpen} 
         onClose={handleCreateCommunityClose}
-        maxWidth="sm"
-        fullWidth
         PaperProps={{
           sx: {
-            background: 'rgba(0,0,0,0.95)',
-            border: '1px solid rgba(255,215,0,0.2)',
-            backdropFilter: 'blur(10px)',
-            color: '#fff',
+            background: 'rgba(0, 0, 0, 0.7)',
+            border: '1px solid rgba(255, 215, 0, 0.2)',
+            borderRadius: 2,
+            minWidth: '300px',
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            margin: 0,
+            maxWidth: '90vw',
+            width: 'auto',
           }
         }}
       >
@@ -620,9 +631,6 @@ export default function Friends() {
                   },
                   '&:hover fieldset': {
                     borderColor: 'rgba(255,215,0,0.4)',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#FFD700',
                   },
                 },
                 '& .MuiInputLabel-root': {

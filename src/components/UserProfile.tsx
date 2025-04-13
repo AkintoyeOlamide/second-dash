@@ -340,7 +340,7 @@ export const UserProfile = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: '#000000', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: theme => theme.palette.mode === 'dark' ? '#000000' : '#ffffff', minHeight: '100vh' }}>
       {/* Cover Image */}
       <Box
         sx={{
@@ -366,9 +366,11 @@ export const UserProfile = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4))',
-        }}
-      />
+            background: theme => theme.palette.mode === 'dark' 
+              ? 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4))'
+              : 'linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.4))',
+          }}
+        />
       </Box>
 
       {/* Profile Info Section */}
@@ -410,14 +412,22 @@ export const UserProfile = () => {
                     height: 120,
                     borderRadius: '50%',
                     objectFit: 'cover',
-                    border: '4px solid rgba(0, 0, 0, 0.5)'
+                    border: theme => `4px solid ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0.2)'}`
                   }}
                 />
                 <Box>
-                  <Typography variant="h5" sx={{ mb: 1, color: '#FFFFFF', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                  <Typography variant="h5" sx={{ 
+                    mb: 1, 
+                    color: theme => theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
+                    textShadow: theme => theme.palette.mode === 'dark' ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'
+                  }}>
                     {user?.name || 'Guest User'}
                   </Typography>
-                  <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)', textShadow: '0 1px 2px rgba(0,0,0,0.5)', mb: 1 }}>
+                  <Typography variant="body1" sx={{ 
+                    color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
+                    textShadow: theme => theme.palette.mode === 'dark' ? '0 1px 2px rgba(0,0,0,0.5)' : 'none',
+                    mb: 1 
+                  }}>
                     {user?.isVisitor ? 'Visitor' : 'Meta Mansion Owner'}
                   </Typography>
                   <Box 
@@ -426,19 +436,22 @@ export const UserProfile = () => {
                       alignItems: 'center', 
                       justifyContent: 'center',
                       gap: 0.5,
-                      backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                      backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                       borderRadius: '20px',
                       padding: '4px 12px',
                       width: 'fit-content',
                       margin: '0 auto'
                     }}
                   >
-                    <PeopleIcon sx={{ fontSize: '1.2rem', color: '#FFD700' }} />
+                    <PeopleIcon sx={{ 
+                      fontSize: '1.2rem', 
+                      color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000'
+                    }} />
                     <Typography 
                       variant="body2" 
                       sx={{ 
-                        color: '#FFD700',
-                        textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                        color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                        textShadow: theme => theme.palette.mode === 'dark' ? '0 1px 2px rgba(0,0,0,0.5)' : 'none',
                         fontWeight: 600,
                         fontSize: '0.9rem'
                       }}
@@ -454,12 +467,12 @@ export const UserProfile = () => {
                     position: 'absolute',
                     top: 24,
                     right: 24,
-                    borderColor: 'rgba(255, 215, 0, 0.1)',
-                    color: 'rgba(255, 215, 0, 0.5)',
+                    borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                    color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.5)' : 'rgba(0, 0, 0, 0.5)',
                     '&:hover': {
-                      borderColor: 'rgba(255, 215, 0, 0.3)',
-                      backgroundColor: 'rgba(255, 215, 0, 0.05)',
-                      color: 'rgba(255, 215, 0, 0.7)',
+                      borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.3)' : 'rgba(0, 0, 0, 0.3)',
+                      backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.05)' : 'rgba(0, 0, 0, 0.05)',
+                      color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.7)' : 'rgba(0, 0, 0, 0.7)',
                     },
                   }}
                 >
@@ -476,59 +489,59 @@ export const UserProfile = () => {
                 gap: 2
               }}>
                 <Typography variant="body1" sx={{ 
-                  color: '#FFFFFF', 
+                  color: theme => theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
                   maxWidth: '600px',
-                  textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+                  textShadow: theme => theme.palette.mode === 'dark' ? '0 1px 2px rgba(0,0,0,0.5)' : 'none'
                 }}>
-                {profileData.bio}
+                  {profileData.bio}
                 </Typography>
 
-              {/* Social Links */}
+                {/* Social Links */}
                 <Box sx={{ 
                   display: 'flex', 
                   gap: 2,
                   justifyContent: 'center',
                   flexWrap: 'wrap'
                 }}>
-                <Button
-                  startIcon={<TwitterIcon />}
-                  size="small"
+                  <Button
+                    startIcon={<TwitterIcon />}
+                    size="small"
                     sx={{ 
-                      color: 'rgba(255, 255, 255, 0.9)',
+                      color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
                       '&:hover': {
-                        color: '#FFFFFF',
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                        color: theme => theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
+                        backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
                       }
                     }}
-                >
-                  {profileData.socialLinks.twitter}
-                </Button>
-                <Button
-                  startIcon={<InstagramIcon />}
-                  size="small"
+                  >
+                    {profileData.socialLinks.twitter}
+                  </Button>
+                  <Button
+                    startIcon={<InstagramIcon />}
+                    size="small"
                     sx={{ 
-                      color: 'rgba(255, 255, 255, 0.9)',
+                      color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
                       '&:hover': {
-                        color: '#FFFFFF',
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                        color: theme => theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
+                        backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
                       }
                     }}
-                >
-                  {profileData.socialLinks.instagram}
-                </Button>
-                <Button
-                  startIcon={<WebsiteIcon />}
-                  size="small"
+                  >
+                    {profileData.socialLinks.instagram}
+                  </Button>
+                  <Button
+                    startIcon={<WebsiteIcon />}
+                    size="small"
                     sx={{ 
-                      color: 'rgba(255, 255, 255, 0.9)',
+                      color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
                       '&:hover': {
-                        color: '#FFFFFF',
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                        color: theme => theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
+                        backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
                       }
                     }}
-                >
-                  {profileData.socialLinks.website}
-                </Button>
+                  >
+                    {profileData.socialLinks.website}
+                  </Button>
                 </Box>
               </Box>
             </Paper>
@@ -537,9 +550,9 @@ export const UserProfile = () => {
           {/* Tabs Section */}
           <Grid item xs={12}>
             <Paper sx={{ 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
               backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 215, 0, 0.2)',
+              border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 0, 0, 0.2)'}`,
             }}>
               <Tabs
                 value={tabValue}
@@ -547,15 +560,15 @@ export const UserProfile = () => {
                 variant="fullWidth"
                 sx={{
                   borderBottom: 1,
-                  borderColor: 'rgba(255, 215, 0, 0.2)',
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 0, 0, 0.2)',
                   '& .MuiTab-root': {
-                    color: 'rgba(255, 255, 255, 0.7)',
+                    color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
                     '&.Mui-selected': {
-                      color: '#FFD700',
+                      color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                     },
                   },
                   '& .MuiTabs-indicator': {
-                    backgroundColor: '#FFD700',
+                    backgroundColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                   },
                 }}
               >
@@ -563,7 +576,6 @@ export const UserProfile = () => {
                 <Tab label="Activities" />
                 <Tab label="Items" />
                 <Tab label="Events" />
-                <Tab label="Agent AI" />
               </Tabs>
 
               <TabPanel value={tabValue} index={0}>
@@ -575,16 +587,15 @@ export const UserProfile = () => {
                           height: '100%',
                           display: 'flex',
                           flexDirection: 'column',
-                          backgroundColor: 'rgba(0, 0, 0, 0.95)',
-                          backdropFilter: 'blur(10px)',
-                          border: '1px solid rgba(255, 215, 0, 0.3)',
+                          backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                          border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.3)' : 'rgba(0, 0, 0, 0.3)'}`,
                           borderRadius: '12px',
                           overflow: 'hidden',
                           transition: 'all 0.3s ease-in-out',
                           '&:hover': {
                             transform: 'translateY(-4px)',
-                            borderColor: 'rgba(255, 215, 0, 0.5)',
-                            boxShadow: '0 0 20px rgba(255, 215, 0, 0.2)',
+                            borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+                            boxShadow: theme => theme.palette.mode === 'dark' ? '0 0 20px rgba(255, 215, 0, 0.2)' : '0 0 20px rgba(0, 0, 0, 0.2)',
                           },
                         }}
                       >
@@ -612,7 +623,9 @@ export const UserProfile = () => {
                               left: 0,
                               right: 0,
                               bottom: 0,
-                              background: 'linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6))',
+                              background: theme => theme.palette.mode === 'dark' 
+                                ? 'linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6))'
+                                : 'linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.6))',
                             }}
                           />
                           {/* Status Badge */}
@@ -622,10 +635,10 @@ export const UserProfile = () => {
                               top: 12,
                               right: 12,
                               backgroundColor: property.status === 'Active' 
-                              ? 'rgba(76, 175, 80, 0.9)'
-                              : property.status === 'For Sale'
-                              ? 'rgba(255, 215, 0, 0.9)'
-                              : 'rgba(33, 150, 243, 0.9)',
+                                ? theme => theme.palette.mode === 'dark' ? 'rgba(76, 175, 80, 0.9)' : 'rgba(76, 175, 80, 0.7)'
+                                : property.status === 'For Sale'
+                                ? theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.9)' : 'rgba(255, 215, 0, 0.7)'
+                                : theme => theme.palette.mode === 'dark' ? 'rgba(33, 150, 243, 0.9)' : 'rgba(33, 150, 243, 0.7)',
                               color: '#FFFFFF',
                               padding: '4px 12px',
                               borderRadius: '12px',
@@ -643,7 +656,7 @@ export const UserProfile = () => {
                           <Typography 
                             variant="h6" 
                             sx={{ 
-                              color: '#FFFFFF',
+                              color: theme => theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
                               mb: 1,
                               fontSize: isMobile ? '1rem' : '1.25rem',
                             }}
@@ -655,7 +668,7 @@ export const UserProfile = () => {
                             <Typography 
                               variant="body2" 
                               sx={{ 
-                                color: '#FFD700',
+                                color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: 0.5,
@@ -667,7 +680,7 @@ export const UserProfile = () => {
                             <Typography 
                               variant="body2" 
                               sx={{ 
-                                color: 'rgba(255, 255, 255, 0.7)',
+                                color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
                               }}
                             >
                               {property.size}
@@ -677,7 +690,7 @@ export const UserProfile = () => {
                           <Typography 
                             variant="h6" 
                             sx={{ 
-                              color: '#FFD700',
+                              color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                               mb: 1,
                               fontSize: isMobile ? '1.1rem' : '1.25rem',
                             }}
@@ -692,12 +705,12 @@ export const UserProfile = () => {
                               size="small"
                               fullWidth
                               sx={{
-                                backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                                border: '1px solid rgba(255, 215, 0, 0.3)',
-                                color: '#FFD700',
+                                backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                                border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.3)' : 'rgba(0, 0, 0, 0.3)'}`,
+                                color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(255, 215, 0, 0.2)',
-                                  borderColor: '#FFD700',
+                                  backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 0, 0, 0.2)',
+                                  borderColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                                 },
                               }}
                             >
@@ -707,12 +720,12 @@ export const UserProfile = () => {
                               variant="outlined"
                               size="small"
                               sx={{
-                                borderColor: 'rgba(255, 215, 0, 0.3)',
-                                color: '#FFD700',
+                                borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.3)' : 'rgba(0, 0, 0, 0.3)',
+                                color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                                 minWidth: '40px',
                                 '&:hover': {
-                                  borderColor: '#FFD700',
-                                  backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                                  borderColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                                  backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                                 },
                               }}
                             >
@@ -725,7 +738,7 @@ export const UserProfile = () => {
                             display: 'flex', 
                             gap: 2, 
                             alignItems: 'center',
-                            borderTop: '1px solid rgba(255, 215, 0, 0.2)',
+                            borderTop: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 0, 0, 0.2)'}`,
                             pt: 1,
                             mb: 1
                           }}>
@@ -734,9 +747,11 @@ export const UserProfile = () => {
                               startIcon={property.isLiked ? <Favorite /> : <FavoriteBorder />}
                               onClick={() => handleLike(property.id)}
                               sx={{
-                                color: property.isLiked ? '#FFD700' : 'rgba(255, 255, 255, 0.7)',
+                                color: property.isLiked 
+                                  ? theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000'
+                                  : theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                                  backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                                 },
                               }}
                             >
@@ -746,9 +761,9 @@ export const UserProfile = () => {
                               size="small"
                               startIcon={<ChatBubbleOutline />}
                               sx={{
-                                color: 'rgba(255, 255, 255, 0.7)',
+                                color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                                  backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                                 },
                               }}
                             >
@@ -758,9 +773,9 @@ export const UserProfile = () => {
                               size="small"
                               startIcon={<Share />}
                               sx={{
-                                color: 'rgba(255, 255, 255, 0.7)',
+                                color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                                  backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                                 },
                               }}
                             />
@@ -772,7 +787,7 @@ export const UserProfile = () => {
                               <Typography
                                 variant="body2"
                                 sx={{
-                                  color: 'rgba(255, 255, 255, 0.7)',
+                                  color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
                                   fontSize: '0.875rem',
                                   display: '-webkit-box',
                                   WebkitLineClamp: 2,
@@ -783,7 +798,7 @@ export const UserProfile = () => {
                                 <Typography
                                   component="span"
                                   sx={{
-                                    color: '#FFD700',
+                                    color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                                     fontWeight: 600,
                                     mr: 0.5,
                                   }}
@@ -796,7 +811,7 @@ export const UserProfile = () => {
                                 <Typography
                                   variant="caption"
                                   sx={{
-                                    color: 'rgba(255, 255, 255, 0.5)',
+                                    color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
                                     mt: 0.5,
                                     display: 'block',
                                   }}
@@ -810,15 +825,15 @@ export const UserProfile = () => {
                           <Typography 
                             variant="caption" 
                             sx={{ 
-                              color: 'rgba(255, 255, 255, 0.5)',
+                              color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
                               display: 'block',
                             }}
                           >
                             Last updated: {property.lastUpdated}
-                    </Typography>
+                          </Typography>
                         </Box>
                       </Paper>
-                  </Grid>
+                    </Grid>
                   ))}
                 </Grid>
               </TabPanel>
@@ -834,15 +849,15 @@ export const UserProfile = () => {
                   {activities.map((activity) => (
                     <Grid item xs={12} sm={6} md={4} key={activity.id}>
                       <Card sx={{ 
-                        background: 'rgba(255,255,255,0.03)',
+                        background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.95)',
                         borderRadius: '16px',
                         overflow: 'hidden',
-                        border: '1px solid rgba(255,215,0,0.1)',
+                        border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
                         height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
                         '&:hover': {
-                          borderColor: 'rgba(255,215,0,0.3)',
+                          borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.3)' : 'rgba(0, 0, 0, 0.3)',
                           transform: 'translateY(-4px)',
                           transition: 'all 0.3s ease'
                         }
@@ -854,7 +869,7 @@ export const UserProfile = () => {
                           alt={activity.title}
                           sx={{
                             objectFit: 'cover',
-                            borderBottom: '1px solid rgba(255,215,0,0.1)'
+                            borderBottom: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`
                           }}
                         />
                         <Box sx={{ 
@@ -873,7 +888,7 @@ export const UserProfile = () => {
                             <Typography 
                               variant="h6" 
                               sx={{ 
-                                color: '#fff', 
+                                color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                                 fontWeight: 600,
                                 fontSize: '1.1rem'
                               }}
@@ -884,7 +899,7 @@ export const UserProfile = () => {
                           <Typography 
                             variant="body2" 
                             sx={{ 
-                              color: 'rgba(255,255,255,0.7)',
+                              color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0, 0, 0, 0.7)',
                               flex: 1
                             }}
                           >
@@ -896,12 +911,12 @@ export const UserProfile = () => {
                             display: 'flex', 
                             justifyContent: 'space-between', 
                             alignItems: 'center',
-                            borderTop: '1px solid rgba(255,215,0,0.1)'
+                            borderTop: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`
                           }}>
                             <Typography 
                               variant="h6" 
                               sx={{ 
-                                color: '#FFD700',
+                                color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
                                 fontWeight: 600
                               }}
                             >
@@ -910,11 +925,11 @@ export const UserProfile = () => {
                             <Typography 
                               variant="caption" 
                               sx={{ 
-                                color: 'rgba(255,255,255,0.5)'
+                                color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0, 0, 0, 0.5)'
                               }}
                             >
                               {activity.timestamp}
-                </Typography>
+                            </Typography>
                           </Box>
                         </Box>
                       </Card>
@@ -932,11 +947,11 @@ export const UserProfile = () => {
                     variant="outlined"
                     startIcon={<AddIcon />}
                     sx={{
-                      color: '#FFD700',
-                      borderColor: 'rgba(255,215,0,0.2)',
+                      color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
+                      borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.2)',
                       '&:hover': {
-                        borderColor: '#FFD700',
-                        background: 'rgba(255,215,0,0.1)'
+                        borderColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
+                        background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'
                       }
                     }}
                   >
@@ -948,10 +963,10 @@ export const UserProfile = () => {
                   {[1, 2, 3].map((item) => (
                     <Grid item xs={12} sm={6} md={4} key={item}>
                       <Card sx={{ 
-                        background: 'rgba(255,255,255,0.03)',
+                        background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.95)',
                         borderRadius: '16px',
                         overflow: 'hidden',
-                        border: '1px solid rgba(255,215,0,0.1)',
+                        border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
                         height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
@@ -968,7 +983,7 @@ export const UserProfile = () => {
                           alt="Mansion Item"
                           sx={{
                             objectFit: 'cover',
-                            borderBottom: '1px solid rgba(255,215,0,0.1)'
+                            borderBottom: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`
                           }}
                         />
                         <Box sx={{ 
@@ -981,7 +996,7 @@ export const UserProfile = () => {
                           <Typography 
                             variant="h6" 
                             sx={{ 
-                              color: '#fff', 
+                              color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                               fontWeight: 600,
                               fontSize: '1.1rem'
                             }}
@@ -992,7 +1007,7 @@ export const UserProfile = () => {
                             display: 'flex', 
                             alignItems: 'center', 
                             gap: 1,
-                            color: 'rgba(255,255,255,0.7)'
+                            color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0, 0, 0, 0.7)'
                           }}>
                             <LocationOn sx={{ fontSize: '1rem' }} />
                             <Typography variant="body2">
@@ -1005,26 +1020,30 @@ export const UserProfile = () => {
                             display: 'flex', 
                             justifyContent: 'space-between', 
                             alignItems: 'center',
-                            borderTop: '1px solid rgba(255,215,0,0.1)'
+                            borderTop: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`
                           }}>
                             <Typography 
                               variant="h6" 
                               sx={{ 
-                                color: '#FFD700',
+                                color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
                                 fontWeight: 600
                               }}
                             >
                               0.5 ETH
-                </Typography>
+                            </Typography>
                             <Button
                               size="small"
                               variant="contained"
                               sx={{
-                                background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)',
-                                color: '#000',
+                                background: theme => theme.palette.mode === 'dark' 
+                                  ? 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)'
+                                  : 'linear-gradient(45deg, #000 0%, #333 100%)',
+                                color: '#fff !important',
                                 fontWeight: 600,
                                 '&:hover': {
-                                  background: 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)',
+                                  background: theme => theme.palette.mode === 'dark' 
+                                    ? 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)'
+                                    : 'linear-gradient(45deg, #333 0%, #666 100%)',
                                 }
                               }}
                             >
@@ -1047,11 +1066,11 @@ export const UserProfile = () => {
                     variant="outlined"
                     startIcon={<AddIcon />}
                     sx={{
-                      color: '#FFD700',
-                      borderColor: 'rgba(255,215,0,0.2)',
+                      color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
+                      borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.2)',
                       '&:hover': {
-                        borderColor: '#FFD700',
-                        background: 'rgba(255,215,0,0.1)'
+                        borderColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
+                        background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'
                       }
                     }}
                   >
@@ -1063,10 +1082,10 @@ export const UserProfile = () => {
                   {[1, 2, 3].map((event) => (
                     <Grid item xs={12} sm={6} md={4} key={event}>
                       <Card sx={{ 
-                        background: 'rgba(255,255,255,0.03)',
+                        background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.95)',
                         borderRadius: '16px',
                         overflow: 'hidden',
-                        border: '1px solid rgba(255,215,0,0.1)',
+                        border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
                         height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
@@ -1083,7 +1102,7 @@ export const UserProfile = () => {
                           alt="Event"
                           sx={{
                             objectFit: 'cover',
-                            borderBottom: '1px solid rgba(255,215,0,0.1)'
+                            borderBottom: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`
                           }}
                         />
                         <Box sx={{ 
@@ -1096,7 +1115,7 @@ export const UserProfile = () => {
                           <Typography 
                             variant="h6" 
                             sx={{ 
-                              color: '#fff', 
+                              color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                               fontWeight: 600,
                               fontSize: '1.1rem'
                             }}
@@ -1107,7 +1126,7 @@ export const UserProfile = () => {
                             display: 'flex', 
                             alignItems: 'center', 
                             gap: 1,
-                            color: 'rgba(255,255,255,0.7)'
+                            color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0, 0, 0, 0.7)'
                           }}>
                             <DateRange sx={{ fontSize: '1rem' }} />
                             <Typography variant="body2">
@@ -1120,26 +1139,30 @@ export const UserProfile = () => {
                             display: 'flex', 
                             justifyContent: 'space-between', 
                             alignItems: 'center',
-                            borderTop: '1px solid rgba(255,215,0,0.1)'
+                            borderTop: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.1)'}`
                           }}>
                             <Typography 
                               variant="h6" 
                               sx={{ 
-                                color: '#FFD700',
+                                color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
                                 fontWeight: 600
                               }}
                             >
                               Free Entry
-                </Typography>
+                            </Typography>
                             <Button
                               size="small"
                               variant="contained"
                               sx={{
-                                background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)',
-                                color: '#000',
+                                background: theme => theme.palette.mode === 'dark' 
+                                  ? 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)'
+                                  : 'linear-gradient(45deg, #000 0%, #333 100%)',
+                                color: '#fff !important',
                                 fontWeight: 600,
                                 '&:hover': {
-                                  background: 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)',
+                                  background: theme => theme.palette.mode === 'dark' 
+                                    ? 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)'
+                                    : 'linear-gradient(45deg, #333 0%, #666 100%)',
                                 }
                               }}
                             >
@@ -1154,138 +1177,7 @@ export const UserProfile = () => {
               </TabPanel>
 
               <TabPanel value={tabValue} index={4}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                  <Typography variant="h6" sx={{ color: '#fff', fontWeight: 600 }}>
-                    AI Assistant
-                  </Typography>
-                </Box>
-
-                <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                    <Card sx={{ 
-                      background: 'rgba(255,255,255,0.03)',
-                      borderRadius: '16px',
-                      overflow: 'hidden',
-                      border: '1px solid rgba(255,215,0,0.1)',
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      '&:hover': {
-                        borderColor: 'rgba(255,215,0,0.3)',
-                        transform: 'translateY(-4px)',
-                        transition: 'all 0.3s ease'
-                      }
-                    }}>
-                      <Box sx={{ 
-                        p: 3, 
-                        display: 'flex', 
-                        flexDirection: 'column',
-                        gap: 2
-                      }}>
-                        <Typography 
-                          variant="h5" 
-                          sx={{ 
-                            color: '#FFD700', 
-                            fontWeight: 600,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1
-                          }}
-                        >
-                          <MilitaryTech sx={{ fontSize: '2rem' }} />
-                          Your Personal AI Assistant
-                        </Typography>
-                        
-                        <Typography 
-                          variant="body1" 
-                          sx={{ 
-                            color: 'rgba(255,255,255,0.9)',
-                            lineHeight: 1.6
-                          }}
-                        >
-                          Welcome to your AI assistant! I'm here to help you with:
-                        </Typography>
-
-                        <Box sx={{ 
-                          display: 'grid', 
-                          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-                          gap: 2,
-                          mt: 2
-                        }}>
-                          <Paper sx={{ 
-                            p: 2, 
-                            background: 'rgba(255,215,0,0.05)',
-                            border: '1px solid rgba(255,215,0,0.1)',
-                            borderRadius: '12px'
-                          }}>
-                            <Typography variant="h6" sx={{ color: '#FFD700', mb: 1 }}>
-                              Property Management
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                              • Property valuation and market analysis
-                              • Investment recommendations
-                              • Maintenance scheduling
-                              • Tenant management
-                            </Typography>
-                          </Paper>
-
-                          <Paper sx={{ 
-                            p: 2, 
-                            background: 'rgba(255,215,0,0.05)',
-                            border: '1px solid rgba(255,215,0,0.1)',
-                            borderRadius: '12px'
-                          }}>
-                            <Typography variant="h6" sx={{ color: '#FFD700', mb: 1 }}>
-                              Market Insights
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                              • Market trends analysis
-                              • Price predictions
-                              • Competitor analysis
-                              • Investment opportunities
-                            </Typography>
-                          </Paper>
-                        </Box>
-
-                        <Box sx={{ 
-                          mt: 3,
-                          display: 'flex',
-                          gap: 2,
-                          flexWrap: 'wrap'
-                        }}>
-                          <Button
-                            variant="contained"
-                            startIcon={<ChatBubbleOutline />}
-                            sx={{
-                              background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)',
-                              color: '#000',
-                              fontWeight: 600,
-                              '&:hover': {
-                                background: 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)',
-                              }
-                            }}
-                          >
-                            Start Chat
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            startIcon={<FilterList />}
-                            sx={{
-                              borderColor: 'rgba(255,215,0,0.2)',
-                              color: '#FFD700',
-                              '&:hover': {
-                                borderColor: '#FFD700',
-                                background: 'rgba(255,215,0,0.1)'
-                              }
-                            }}
-                          >
-                            Customize Preferences
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Card>
-                  </Grid>
-                </Grid>
+                {/* Agent AI content */}
               </TabPanel>
             </Paper>
           </Grid>

@@ -168,9 +168,9 @@ export default function Wallet() {
 
   return (
     <Box sx={{ 
-      minHeight: '100vh', 
-      background: '#000000',
-      pt: 4,
+      minHeight: '100vh',
+      background: theme => theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+      pt: { xs: 8, sm: 4 },
       pb: 8
     }}>
       <Container maxWidth="xl">
@@ -188,12 +188,15 @@ export default function Wallet() {
               variant="outlined"
               startIcon={<WalletIcon />}
               sx={{
-                color: '#FFD700',
-                borderColor: 'rgba(255,215,0,0.2)',
+                color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.2)',
                 '&:hover': {
-                  borderColor: '#FFD700',
-                  background: 'rgba(255,215,0,0.1)'
-                }
+                  borderColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                  background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.1)'
+                },
+                px: 1.5,
+                py: 0.5,
+                fontSize: { xs: '0.7rem', sm: '0.875rem' }
               }}
             >
               Connect Wallet
@@ -202,12 +205,14 @@ export default function Wallet() {
           <Typography 
             variant="h1" 
             sx={{
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
+              fontSize: { xs: '1.2rem', md: '3.5rem' },
               fontWeight: 800,
-              color: '#fff',
+              color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000000',
               mb: 2,
               letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
+              background: theme => theme.palette.mode === 'dark' 
+                ? 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)'
+                : 'linear-gradient(90deg, #000000 0%, #333333 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -215,9 +220,9 @@ export default function Wallet() {
             Your Wallet
           </Typography>
           <Typography 
-            sx={{
-              color: 'rgba(255,255,255,0.7)',
-              fontSize: '1.1rem',
+            sx={{ 
+              color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
+              fontSize: { xs: '0.7rem', sm: '1.1rem' },
               maxWidth: '600px'
             }}
           >
@@ -228,10 +233,10 @@ export default function Wallet() {
         {/* Total Balance Card */}
         <Card
           sx={{
-            background: 'rgba(255,255,255,0.05)',
+            background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
             borderRadius: '24px',
             p: 4,
-            border: '1px solid rgba(255,215,0,0.2)',
+            border: theme => theme.palette.mode === 'dark' ? '1px solid rgba(255,215,0,0.2)' : '1px solid rgba(0,0,0,0.2)',
             backdropFilter: 'blur(10px)',
             mb: 4
           }}
@@ -239,13 +244,13 @@ export default function Wallet() {
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
               <Box>
-                <Typography sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
+                <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', mb: 1, fontSize: { xs: '0.65rem', sm: '0.875rem' } }}>
                   Total Portfolio Value
                 </Typography>
                 <Typography 
                   sx={{ 
-                    color: '#fff',
-                    fontSize: '2.5rem',
+                    color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000000',
+                    fontSize: { xs: '1.2rem', sm: '2.5rem' },
                     fontWeight: 700
                   }}
                 >
@@ -264,10 +269,10 @@ export default function Wallet() {
                 <Button
                   startIcon={<ArrowUpwardIcon />}
                   sx={{
-                    background: 'rgba(255,215,0,0.1)',
-                    color: '#FFD700',
+                    background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.1)',
+                    color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                     '&:hover': {
-                      background: 'rgba(255,215,0,0.2)'
+                      background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.2)'
                     }
                   }}
                 >
@@ -276,10 +281,10 @@ export default function Wallet() {
                 <Button
                   startIcon={<ArrowDownwardIcon />}
                   sx={{
-                    background: 'rgba(255,215,0,0.1)',
-                    color: '#FFD700',
+                    background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.1)',
+                    color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                     '&:hover': {
-                      background: 'rgba(255,215,0,0.2)'
+                      background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.2)'
                     }
                   }}
                 >
@@ -293,24 +298,24 @@ export default function Wallet() {
         {/* Tabs */}
         <Card
           sx={{
-            background: 'rgba(255,255,255,0.05)',
+            background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
             borderRadius: '24px',
-            border: '1px solid rgba(255,215,0,0.2)',
+            border: theme => theme.palette.mode === 'dark' ? '1px solid rgba(255,215,0,0.2)' : '1px solid rgba(0,0,0,0.2)',
             backdropFilter: 'blur(10px)'
           }}
         >
-          <Box sx={{ borderBottom: 1, borderColor: 'rgba(255,215,0,0.2)' }}>
+          <Box sx={{ borderBottom: 1, borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.2)' }}>
             <Tabs 
               value={tabValue} 
               onChange={handleTabChange}
               sx={{
                 '& .MuiTabs-indicator': {
-                  backgroundColor: '#FFD700',
+                  backgroundColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                 },
                 '& .MuiTab-root': {
-                  color: 'rgba(255,255,255,0.7)',
+                  color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
                   '&.Mui-selected': {
-                    color: '#FFD700',
+                    color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                   },
                 },
               }}
@@ -328,16 +333,15 @@ export default function Wallet() {
                 <Grid item xs={12} md={4} key={holding.id}>
                   <Card
                     sx={{
-                      background: 'rgba(255,255,255,0.05)',
+                      background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
                       borderRadius: '16px',
                       overflow: 'hidden',
-                      border: '1px solid rgba(255,215,0,0.2)',
-                      backdropFilter: 'blur(10px)',
+                      border: theme => theme.palette.mode === 'dark' ? '1px solid rgba(255,215,0,0.2)' : '1px solid rgba(0,0,0,0.2)',
                       height: '100%',
                       transition: 'transform 0.2s',
                       '&:hover': {
                         transform: 'translateY(-4px)',
-                        borderColor: 'rgba(255,215,0,0.4)'
+                        borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(0,0,0,0.4)'
                       }
                     }}
                   >
@@ -371,8 +375,8 @@ export default function Wallet() {
                         }}
                       >
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <StarIcon sx={{ color: '#FFD700', fontSize: 20 }} />
-                          <Typography sx={{ color: '#fff', fontWeight: 600 }}>
+                          <StarIcon sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: 20 }} />
+                          <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000000', fontWeight: 600 }}>
                             {holding.rating}
                           </Typography>
                         </Box>
@@ -383,9 +387,9 @@ export default function Wallet() {
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
                         <Typography
                           sx={{
-                            color: '#fff',
+                            color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000000',
                             fontWeight: 600,
-                            fontSize: '1.1rem'
+                            fontSize: { xs: '0.8rem', sm: '1.1rem' }
                           }}
                         >
                           {holding.name}
@@ -406,22 +410,22 @@ export default function Wallet() {
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                        <LocationIcon sx={{ color: '#FFD700', fontSize: 16 }} />
-                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                        <LocationIcon sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: 16 }} />
+                        <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', fontSize: { xs: '0.65rem', sm: '0.9rem' } }}>
                           {holding.location}
                         </Typography>
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                        <PeopleIcon sx={{ color: '#FFD700', fontSize: 16 }} />
-                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                        <PeopleIcon sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: 16 }} />
+                        <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', fontSize: { xs: '0.65rem', sm: '0.9rem' } }}>
                           {holding.visitors.toLocaleString()} visitors
                         </Typography>
                       </Box>
 
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
                         <Box>
-                          <Typography sx={{ color: '#fff', fontWeight: 600 }}>
+                          <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000000', fontWeight: 600, fontSize: { xs: '0.7rem', sm: '0.875rem' } }}>
                             {holding.value}
                           </Typography>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
@@ -433,7 +437,7 @@ export default function Wallet() {
                             <Typography 
                               sx={{ 
                                 color: holding.change.startsWith('+') ? '#4CAF50' : '#f44336',
-                                fontSize: '0.9rem'
+                                fontSize: { xs: '0.65rem', sm: '0.9rem' }
                               }}
                             >
                               {holding.change} ({holding.changePercent})
@@ -441,7 +445,7 @@ export default function Wallet() {
                           </Box>
                         </Box>
                         <IconButton size="small">
-                          <MoreVertIcon sx={{ color: 'rgba(255,255,255,0.7)' }} />
+                          <MoreVertIcon sx={{ color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)' }} />
                         </IconButton>
                       </Box>
                     </Box>
@@ -458,11 +462,11 @@ export default function Wallet() {
               sx={{
                 background: 'transparent',
                 '& .MuiTableCell-root': {
-                  borderColor: 'rgba(255,215,0,0.2)',
-                  color: '#fff',
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.2)',
+                  color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000000',
                 },
                 '& .MuiTableHead-root .MuiTableCell-root': {
-                  color: 'rgba(255,255,255,0.7)',
+                  color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
                 }
               }}
             >
@@ -518,7 +522,7 @@ export default function Wallet() {
                         />
                       </TableCell>
                       <TableCell>
-                        <Typography sx={{ color: '#FFD700', fontSize: '0.9rem' }}>
+                        <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: '0.9rem' }}>
                           {transaction.txHash}
                         </Typography>
                       </TableCell>
@@ -536,10 +540,10 @@ export default function Wallet() {
                 <Grid item xs={12} md={6} key={project.id}>
                   <Card
                     sx={{
-                      background: 'rgba(255,255,255,0.05)',
+                      background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
                       borderRadius: '16px',
                       p: 3,
-                      border: '1px solid rgba(255,215,0,0.2)',
+                      border: theme => theme.palette.mode === 'dark' ? '1px solid rgba(255,215,0,0.2)' : '1px solid rgba(0,0,0,0.2)',
                       backdropFilter: 'blur(10px)',
                       height: '100%'
                     }}
@@ -547,9 +551,9 @@ export default function Wallet() {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
                       <Typography
                         sx={{
-                          color: '#fff',
+                          color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000000',
                           fontWeight: 600,
-                          fontSize: '1.2rem'
+                          fontSize: { xs: '0.8rem', sm: '1.2rem' }
                         }}
                       >
                         {project.name}
@@ -567,10 +571,10 @@ export default function Wallet() {
 
                     <Box sx={{ mb: 2 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                        <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', fontSize: { xs: '0.65rem', sm: '0.9rem' } }}>
                           Progress
                         </Typography>
-                        <Typography sx={{ color: '#FFD700', fontSize: '0.9rem' }}>
+                        <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: { xs: '0.65rem', sm: '0.9rem' } }}>
                           {project.progress}%
                         </Typography>
                       </Box>
@@ -580,9 +584,9 @@ export default function Wallet() {
                         sx={{
                           height: 8,
                           borderRadius: 4,
-                          backgroundColor: 'rgba(255,215,0,0.1)',
+                          backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.1)',
                           '& .MuiLinearProgress-bar': {
-                            backgroundColor: '#FFD700',
+                            backgroundColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                           },
                         }}
                       />
@@ -590,24 +594,24 @@ export default function Wallet() {
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <TimerIcon sx={{ color: '#FFD700', fontSize: 16 }} />
-                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                        <TimerIcon sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: 16 }} />
+                        <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', fontSize: { xs: '0.65rem', sm: '0.9rem' } }}>
                           Est. Completion
                         </Typography>
                       </Box>
-                      <Typography sx={{ color: '#FFD700', fontSize: '0.9rem' }}>
+                      <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: { xs: '0.65rem', sm: '0.9rem' } }}>
                         {project.estimatedCompletion}
                       </Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <WalletIcon sx={{ color: '#FFD700', fontSize: 16 }} />
-                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                        <WalletIcon sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: 16 }} />
+                        <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', fontSize: { xs: '0.65rem', sm: '0.9rem' } }}>
                           Total Cost
                         </Typography>
                       </Box>
-                      <Typography sx={{ color: '#FFD700', fontSize: '1.1rem', fontWeight: 600 }}>
+                      <Typography sx={{ color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000', fontSize: { xs: '0.7rem', sm: '1.1rem' }, fontWeight: 600 }}>
                         {project.cost}
                       </Typography>
                     </Box>

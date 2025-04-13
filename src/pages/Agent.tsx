@@ -38,11 +38,12 @@ const Agent: React.FC = () => {
   return (
     <Box sx={{ 
       height: '100vh', 
-      background: '#000000',
+      background: theme => theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
       position: 'relative',
       overflow: 'hidden',
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
+      paddingTop: '96px'
     }}>
       {/* Animated background elements */}
       <Box
@@ -52,7 +53,9 @@ const Agent: React.FC = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'radial-gradient(circle at 50% 50%, rgba(255,215,0,0.1) 0%, transparent 70%)',
+          background: theme => theme.palette.mode === 'dark' 
+            ? 'radial-gradient(circle at 50% 50%, rgba(255,215,0,0.1) 0%, transparent 70%)'
+            : 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.1) 0%, transparent 70%)',
           animation: 'pulse 8s infinite',
           '@keyframes pulse': {
             '0%': { transform: 'scale(1)' },
@@ -71,7 +74,9 @@ const Agent: React.FC = () => {
             width: '4px',
             height: '4px',
             borderRadius: '50%',
-            background: 'rgba(255,215,0,0.3)',
+            background: theme => theme.palette.mode === 'dark' 
+              ? 'rgba(255,215,0,0.3)'
+              : 'rgba(0,0,0,0.3)',
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
             animation: `float ${5 + Math.random() * 5}s infinite`,
@@ -98,18 +103,26 @@ const Agent: React.FC = () => {
                   px: 4,
                   py: 1.5,
                   borderRadius: '30px',
-                  background: 'rgba(255,215,0,0.15)',
-                  border: '2px solid rgba(255,215,0,0.3)',
-                  boxShadow: '0 0 20px rgba(255,215,0,0.2)',
+                  background: theme => theme.palette.mode === 'dark' 
+                    ? 'rgba(255,215,0,0.15)'
+                    : 'rgba(0,0,0,0.05)',
+                  border: theme => theme.palette.mode === 'dark'
+                    ? '2px solid rgba(255,215,0,0.3)'
+                    : '2px solid rgba(0,0,0,0.1)',
+                  boxShadow: theme => theme.palette.mode === 'dark'
+                    ? '0 0 20px rgba(255,215,0,0.2)'
+                    : '0 0 20px rgba(0,0,0,0.1)',
                 }}
               >
-                <RocketIcon sx={{ color: '#FFD700', fontSize: '2.5rem' }} />
+                <RocketIcon sx={{ 
+                  color: '#D4AF37',
+                  fontSize: '2.5rem' 
+                }} />
                 <Typography sx={{ 
-                  color: '#FFD700', 
+                  color: '#D4AF37',
                   fontWeight: 800,
                   fontSize: '2.5rem',
                   letterSpacing: '1px',
-                  textShadow: '0 0 10px rgba(255,215,0,0.3)',
                 }}>
                   Coming Soon
                 </Typography>
@@ -118,7 +131,7 @@ const Agent: React.FC = () => {
               <Typography 
                 variant="h2"
                 sx={{
-                  color: '#FFFFFF',
+                  color: theme => theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
                   fontWeight: 700,
                   mb: 1.5,
                   fontSize: { xs: '2rem', md: '2.5rem' },
@@ -126,7 +139,10 @@ const Agent: React.FC = () => {
                 }}
               >
                 AI-Powered
-                <Box component="span" sx={{ color: '#FFD700' }}>
+                <Box component="span" sx={{ 
+                  color: '#D4AF37',
+                  fontWeight: 800,
+                }}>
                   {" "}Avatar Builder
                 </Box>
               </Typography>
@@ -134,7 +150,9 @@ const Agent: React.FC = () => {
               <Typography 
                 variant="h6"
                 sx={{
-                  color: 'rgba(255,255,255,0.7)',
+                  color: theme => theme.palette.mode === 'dark' 
+                    ? 'rgba(255,255,255,0.7)'
+                    : 'rgba(0,0,0,0.7)',
                   mb: 2,
                   fontSize: { xs: '0.95rem', md: '1rem' },
                 }}
@@ -147,14 +165,18 @@ const Agent: React.FC = () => {
                 <Button
                   variant="contained"
                   sx={{
-                    background: 'linear-gradient(45deg, #FFD700, #FFA500)',
-                    color: '#000',
+                    background: theme => theme.palette.mode === 'dark'
+                      ? 'linear-gradient(45deg, #FFD700, #FFA500)'
+                      : 'linear-gradient(45deg, #000000, #333333)',
+                    color: '#FFFFFF !important',
                     fontWeight: 600,
                     px: 3,
                     py: 1,
                     borderRadius: '30px',
                     '&:hover': {
-                      background: 'linear-gradient(45deg, #FFC700, #FF9500)',
+                      background: theme => theme.palette.mode === 'dark'
+                        ? 'linear-gradient(45deg, #FFC700, #FF9500)'
+                        : 'linear-gradient(45deg, #333333, #000000)',
                     },
                   }}
                 >
@@ -163,14 +185,18 @@ const Agent: React.FC = () => {
                 <Button
                   variant="outlined"
                   sx={{
-                    borderColor: 'rgba(255,215,0,0.3)',
-                    color: '#FFD700',
+                    borderColor: theme => theme.palette.mode === 'dark'
+                      ? 'rgba(255,215,0,0.3)'
+                      : 'rgba(0,0,0,0.3)',
+                    color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                     px: 3,
                     py: 1,
                     borderRadius: '30px',
                     '&:hover': {
-                      borderColor: '#FFD700',
-                      background: 'rgba(255,215,0,0.1)',
+                      borderColor: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                      background: theme => theme.palette.mode === 'dark'
+                        ? 'rgba(255,215,0,0.1)'
+                        : 'rgba(0,0,0,0.05)',
                     },
                   }}
                 >
@@ -188,11 +214,13 @@ const Agent: React.FC = () => {
                 height: '500px',
                 borderRadius: '20px',
                 overflow: 'hidden',
-                boxShadow: '0 0 30px rgba(255,215,0,0.1)',
+                boxShadow: theme => theme.palette.mode === 'dark'
+                  ? '0 0 30px rgba(255,215,0,0.1)'
+                  : '0 0 30px rgba(0,0,0,0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                bgcolor: '#000000',
+                bgcolor: theme => theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
                 ml: { md: -3 },
               }}
             >

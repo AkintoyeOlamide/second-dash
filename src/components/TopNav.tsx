@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, IconButton, Typography, useTheme, Button, Avatar, useMediaQuery, Paper } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -12,14 +12,15 @@ import {
   Menu as MenuIcon,
   Person as ProfileIcon,
   Groups as FriendsIcon,
-  SmartToy as AgentIcon,
   Science as TestIcon,
   Science as TrialIcon,
   Dashboard as DashboardIcon,
   Settings as SettingsIcon,
   Science as ScienceIcon,
+  SmartToy,
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
+import { useThemeContext } from '../contexts/ThemeContext';
 import { AuthModal } from './AuthModal';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,9 +34,24 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
   const theme = useTheme();
   const isScreenMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user, logout } = useAuth();
+  const { isDarkMode } = useThemeContext();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const navigate = useNavigate();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobileDrawer && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        onMenuClick?.();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileDrawer, onMenuClick]);
 
   const handleOpenSignIn = () => {
     setAuthMode('signin');
@@ -61,12 +77,12 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
             startIcon={<LoginIcon />}
             onClick={handleOpenSignIn}
             sx={{
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)',
               color: 'text.secondary',
               justifyContent: 'flex-start',
               '&:hover': {
-                borderColor: '#ffffff',
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                borderColor: isDarkMode ? '#ffffff' : '#000000',
+                backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
               },
             }}
           >
@@ -78,12 +94,12 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
             startIcon={<SignupIcon />}
             onClick={handleOpenSignUp}
             sx={{
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)',
               color: 'text.secondary',
               justifyContent: 'flex-start',
               '&:hover': {
-                borderColor: '#ffffff',
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                borderColor: isDarkMode ? '#ffffff' : '#000000',
+                backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
               },
             }}
           >
@@ -100,9 +116,9 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
             sx={{ 
               width: 32, 
               height: 32,
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              bgcolor: 'rgba(0, 0, 0, 0.5)',
-              color: 'rgba(255, 255, 255, 0.9)'
+              border: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+              bgcolor: isDarkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
+              color: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)'
             }}
           >
             {user.name.charAt(0)}
@@ -118,12 +134,12 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
           startIcon={<LogoutIcon />}
           fullWidth
           sx={{
-            borderColor: 'rgba(255, 255, 255, 0.12)',
+            borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)',
             color: 'text.secondary',
             justifyContent: 'flex-start',
             '&:hover': {
-              borderColor: '#ffffff',
-              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+              borderColor: isDarkMode ? '#ffffff' : '#000000',
+              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
             },
           }}
         >
@@ -135,19 +151,21 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
 
   const sidebarContent = (
     <Paper
+      ref={menuRef}
       elevation={0}
       sx={{
         width: '240px',
-        height: isMobileDrawer ? '100%' : '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+        height: '100vh',
+        backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+        borderRight: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
-        position: isMobileDrawer ? 'relative' : 'fixed',
+        position: 'fixed',
         left: 0,
         top: 0,
         zIndex: 1200,
+        transform: isMobileDrawer ? 'translateX(0)' : 'translateX(-100%)',
+        transition: 'transform 0.3s ease-in-out',
       }}
     >
       <Box sx={{ 
@@ -157,7 +175,7 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: 'black',
+        backgroundColor: isDarkMode ? 'black' : 'white',
         padding: '10px 30px',
       }}>
         <img 
@@ -178,7 +196,7 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
         <Typography 
           variant="subtitle2" 
           sx={{ 
-            color: 'rgba(255, 255, 255, 0.7)',
+            color: isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
             mb: 2,
             fontSize: '0.75rem',
             textTransform: 'uppercase',
@@ -193,13 +211,16 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
             <>
               <Button
                 startIcon={<HomeIcon />}
-                onClick={() => navigate('/')}
+                onClick={() => {
+                  navigate('/');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -207,13 +228,16 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<ProfileIcon />}
-                onClick={() => navigate('/profile')}
+                onClick={() => {
+                  navigate('/profile');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -221,13 +245,16 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<HomeIcon />}
-                onClick={() => navigate('/build')}
+                onClick={() => {
+                  navigate('/build');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -235,13 +262,16 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<ShopIcon />}
-                onClick={() => navigate('/shop')}
+                onClick={() => {
+                  navigate('/shop');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -249,27 +279,33 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<PlayIcon />}
-                onClick={() => navigate('/play')}
+                onClick={() => {
+                  navigate('/play');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
                 Play
               </Button>
               <Button
-                startIcon={<AgentIcon />}
-                onClick={() => navigate('/agent')}
+                startIcon={<SmartToy />}
+                onClick={() => {
+                  navigate('/agent');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -277,13 +313,16 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<FriendsIcon />}
-                onClick={() => navigate('/friends')}
+                onClick={() => {
+                  navigate('/friends');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -291,13 +330,16 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<WalletIcon />}
-                onClick={() => navigate('/wallet')}
+                onClick={() => {
+                  navigate('/wallet');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -305,31 +347,53 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<TestIcon />}
-                onClick={() => navigate('/test')}
+                onClick={() => {
+                  navigate('/test');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
                 Test
               </Button>
-            </>
-          ) : (
-            // Visitor navigation
-            <>
               <Button
-                startIcon={<HomeIcon />}
-                onClick={() => navigate('/')}
+                startIcon={<SettingsIcon />}
+                onClick={() => {
+                  navigate('/settings');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                  },
+                }}
+              >
+                Settings
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                startIcon={<HomeIcon />}
+                onClick={() => {
+                  navigate('/');
+                  onMenuClick?.();
+                }}
+                sx={{
+                  color: 'text.secondary',
+                  justifyContent: 'flex-start',
+                  py: 1,
+                  '&:hover': {
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -337,13 +401,16 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<ShopIcon />}
-                onClick={() => navigate('/shop')}
+                onClick={() => {
+                  navigate('/shop');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
@@ -351,31 +418,71 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
               </Button>
               <Button
                 startIcon={<PlayIcon />}
-                onClick={() => navigate('/play')}
+                onClick={() => {
+                  navigate('/play');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
                 Play
               </Button>
               <Button
-                startIcon={<ConnectIcon />}
-                onClick={() => navigate('/advertise')}
+                startIcon={<SmartToy />}
+                onClick={() => {
+                  navigate('/agent');
+                  onMenuClick?.();
+                }}
                 sx={{
                   color: 'text.secondary',
                   justifyContent: 'flex-start',
                   py: 1,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                  },
+                }}
+              >
+                AI-Agent
+              </Button>
+              <Button
+                startIcon={<ConnectIcon />}
+                onClick={() => {
+                  navigate('/advertise');
+                  onMenuClick?.();
+                }}
+                sx={{
+                  color: 'text.secondary',
+                  justifyContent: 'flex-start',
+                  py: 1,
+                  '&:hover': {
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                   },
                 }}
               >
                 Advertise
+              </Button>
+              <Button
+                startIcon={<SettingsIcon />}
+                onClick={() => {
+                  navigate('/settings');
+                  onMenuClick?.();
+                }}
+                sx={{
+                  color: 'text.secondary',
+                  justifyContent: 'flex-start',
+                  py: 1,
+                  '&:hover': {
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                  },
+                }}
+              >
+                Settings
               </Button>
             </>
           )}
@@ -396,16 +503,362 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
 
   return (
     <>
-      {(!isMobile && !isMobileDrawer) && sidebarContent}
+      {(!isMobile && !isMobileDrawer) && (
+        <Paper
+          elevation={0}
+          sx={{
+            width: '240px',
+            height: '100vh',
+            backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+            borderRight: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            zIndex: 1200,
+          }}
+        >
+          <Box sx={{ 
+            width: '100%',
+            height: '100px',
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            backgroundColor: isDarkMode ? 'black' : 'white',
+            padding: '10px 30px',
+          }}>
+            <img 
+              src="/gold-logo.PNG"
+              alt="Gold Logo"
+              style={{
+                maxWidth: '40%',
+                maxHeight: '40px',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0px 2px 4px rgba(255, 215, 0, 0.3))',
+                margin: '0',
+                display: 'block'
+              }}
+            />
+          </Box>
+
+          <Box sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <Typography 
+              variant="subtitle2" 
+              sx={{ 
+                color: isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
+                mb: 2,
+                fontSize: '0.75rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+              }}
+            >
+              Navigation
+            </Typography>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 4 }}>
+              {user && !user.isVisitor ? (
+                <>
+                  <Button
+                    startIcon={<HomeIcon />}
+                    onClick={() => {
+                      navigate('/');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Home
+                  </Button>
+                  <Button
+                    startIcon={<ProfileIcon />}
+                    onClick={() => {
+                      navigate('/profile');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Profile
+                  </Button>
+                  <Button
+                    startIcon={<HomeIcon />}
+                    onClick={() => {
+                      navigate('/build');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Build
+                  </Button>
+                  <Button
+                    startIcon={<ShopIcon />}
+                    onClick={() => {
+                      navigate('/shop');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Shop
+                  </Button>
+                  <Button
+                    startIcon={<PlayIcon />}
+                    onClick={() => {
+                      navigate('/play');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Play
+                  </Button>
+                  <Button
+                    startIcon={<SmartToy />}
+                    onClick={() => {
+                      navigate('/agent');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    AI-Agent
+                  </Button>
+                  <Button
+                    startIcon={<FriendsIcon />}
+                    onClick={() => {
+                      navigate('/friends');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Friends
+                  </Button>
+                  <Button
+                    startIcon={<WalletIcon />}
+                    onClick={() => {
+                      navigate('/wallet');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Wallet
+                  </Button>
+                  <Button
+                    startIcon={<TestIcon />}
+                    onClick={() => {
+                      navigate('/test');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Test
+                  </Button>
+                  <Button
+                    startIcon={<SettingsIcon />}
+                    onClick={() => {
+                      navigate('/settings');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Settings
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    startIcon={<HomeIcon />}
+                    onClick={() => {
+                      navigate('/');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Home
+                  </Button>
+                  <Button
+                    startIcon={<ShopIcon />}
+                    onClick={() => {
+                      navigate('/shop');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Shop
+                  </Button>
+                  <Button
+                    startIcon={<PlayIcon />}
+                    onClick={() => {
+                      navigate('/play');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Play
+                  </Button>
+                  <Button
+                    startIcon={<SmartToy />}
+                    onClick={() => {
+                      navigate('/agent');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    AI-Agent
+                  </Button>
+                  <Button
+                    startIcon={<ConnectIcon />}
+                    onClick={() => {
+                      navigate('/advertise');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Advertise
+                  </Button>
+                  <Button
+                    startIcon={<SettingsIcon />}
+                    onClick={() => {
+                      navigate('/settings');
+                      onMenuClick?.();
+                    }}
+                    sx={{
+                      color: 'text.secondary',
+                      justifyContent: 'flex-start',
+                      py: 1,
+                      '&:hover': {
+                        backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+                      },
+                    }}
+                  >
+                    Settings
+                  </Button>
+                </>
+              )}
+            </Box>
+
+            {renderAuthSection()}
+          </Box>
+        </Paper>
+      )}
       {(isMobile && !isMobileDrawer) && (
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between',
-          px: 2,
-          py: 1,
-          height: '64px',
-        }}>
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1200,
+            display: { xs: 'flex', sm: 'none' },
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            p: 2,
+            background: theme => theme.palette.mode === 'dark' ? '#000000' : '#f5f5f5',
+            borderBottom: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -413,20 +866,25 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
             onClick={onMenuClick}
             sx={{ 
               color: '#FFD700',
+              backgroundColor: 'rgba(255, 215, 0, 0.1)',
+              borderRadius: '50%',
+              width: 40,
+              height: 40,
               '&:hover': {
-                backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                backgroundColor: 'rgba(255, 215, 0, 0.2)',
               },
             }}
           >
             <MenuIcon />
           </IconButton>
+          
           <Box sx={{ 
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-start',
-            width: '100%',
-            gap: 2,
-            paddingLeft: '30px'
+            justifyContent: 'flex-end',
+            backgroundColor: 'rgba(255, 215, 0, 0.1)',
+            padding: '8px',
+            borderRadius: '8px',
           }}>
             <img 
               src="/gold-logo.PNG"
@@ -442,7 +900,23 @@ export const TopNav: React.FC<TopNavProps> = ({ onMenuClick, isMobile, isMobileD
           </Box>
         </Box>
       )}
-      {isMobileDrawer && sidebarContent}
+      {isMobileDrawer && (
+        <>
+          {sidebarContent}
+          <Box 
+            sx={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)',
+              zIndex: 1190,
+            }}
+            onClick={onMenuClick}
+          />
+        </>
+      )}
 
       <AuthModal
         open={authModalOpen}

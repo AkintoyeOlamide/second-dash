@@ -2,6 +2,18 @@ import React, { useState } from 'react';
 import { Box, Container, Grid, Paper, Typography, Button, Card, CardMedia, Divider } from '@mui/material';
 import { LocationOn, Add as AddIcon } from '@mui/icons-material';
 
+interface StatData {
+  value: string;
+  label: string;
+}
+
+const statsData: StatData[] = [
+  { value: '12', label: 'Total Mansions' },
+  { value: '45', label: 'Items Listed' },
+  { value: '8', label: 'Active Events' },
+  { value: '25', label: 'Friends Online' }
+];
+
 const Home: React.FC = () => {
   const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
 
@@ -35,65 +47,51 @@ const Home: React.FC = () => {
 
   return (
     <Box>
-      <Container>
+      <Container maxWidth="xl">
         {/* Stats Section */}
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
-            <Paper sx={{ 
-              p: 3, 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 215, 0, 0.2)',
-              textAlign: 'center'
-            }}>
-              <Typography variant="h4" sx={{ color: '#FFD700', mb: 1 }}>12</Typography>
-              <Typography variant="body1" sx={{ color: '#fff' }}>Total Mansions</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Paper sx={{ 
-              p: 3, 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 215, 0, 0.2)',
-              textAlign: 'center'
-            }}>
-              <Typography variant="h4" sx={{ color: '#FFD700', mb: 1 }}>45</Typography>
-              <Typography variant="body1" sx={{ color: '#fff' }}>Items Listed</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Paper sx={{ 
-              p: 3, 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 215, 0, 0.2)',
-              textAlign: 'center'
-            }}>
-              <Typography variant="h4" sx={{ color: '#FFD700', mb: 1 }}>8</Typography>
-              <Typography variant="body1" sx={{ color: '#fff' }}>Active Events</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Paper sx={{ 
-              p: 3, 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 215, 0, 0.2)',
-              textAlign: 'center'
-            }}>
-              <Typography variant="h4" sx={{ color: '#FFD700', mb: 1 }}>25</Typography>
-              <Typography variant="body1" sx={{ color: '#fff' }}>Friends Online</Typography>
-            </Paper>
-          </Grid>
-        </Grid>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' }, 
+          gap: 3, 
+          mb: 6,
+          mx: { xs: 2, md: 4 }
+        }}>
+          {statsData.map((stat, index) => (
+            <Box
+              key={index}
+              sx={{
+                flex: 1,
+                p: 3,
+                borderRadius: 2,
+                background: 'rgba(0, 0, 0, 0.05)',
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                },
+              }}
+            >
+              <Typography variant="h4" sx={{ color: '#000', mb: 1 }}>{stat.value}</Typography>
+              <Typography variant="body1" sx={{ color: 'rgba(0,0,0,0.7)' }}>{stat.label}</Typography>
+            </Box>
+          ))}
+        </Box>
 
         {/* Trending Items Section */}
         <Paper sx={{ 
           p: 3, 
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(10px)',
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
           border: '1px solid rgba(255, 215, 0, 0.2)',
+          borderRadius: 2,
+          minWidth: '300px',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          margin: 0,
+          maxWidth: '90vw',
+          width: 'auto',
           mt: 4
         }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
@@ -260,6 +258,31 @@ const Home: React.FC = () => {
                 <Divider sx={{ borderColor: 'rgba(255, 215, 0, 0.1)' }} />
               </React.Fragment>
             ))}
+          </Box>
+        </Box>
+
+        {/* Carousel Section */}
+        <Box sx={{ 
+          mb: 6,
+          mx: { xs: 2, md: 4 }
+        }}>
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              mb: 4,
+              fontWeight: 'bold',
+              color: '#000',
+              textAlign: 'left'
+            }}
+          >
+            Featured Properties
+          </Typography>
+          <Box sx={{ 
+            borderRadius: 2,
+            overflow: 'hidden',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+          }}>
+            {/* Your existing carousel content */}
           </Box>
         </Box>
       </Container>

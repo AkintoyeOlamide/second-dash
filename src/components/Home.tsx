@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Grid, Paper, Typography, useTheme, useMediaQuery, Button, IconButton, Chip, Avatar, Card, CardMedia, CardContent, Collapse, Divider } from '@mui/material';
-import { Key as KeyIcon, Favorite, FavoriteBorder, Share, LocationOn, SquareFoot, AccessTime, EmojiEvents, Add as AddIcon, TrendingUp, Timer, Remove as RemoveIcon } from '@mui/icons-material';
+import { Box, Grid, Paper, Typography, useTheme, useMediaQuery, Button, IconButton, Chip, Avatar, Card, CardMedia, CardContent, Collapse, Divider, Link } from '@mui/material';
+import { Key as KeyIcon, Favorite, FavoriteBorder, Share, LocationOn, SquareFoot, AccessTime, EmojiEvents, Add as AddIcon, TrendingUp, Timer, Remove as RemoveIcon, Gamepad, TrendingDown, Twitter, Telegram } from '@mui/icons-material';
 import Rating from '@mui/material/Rating';
 import { Star, LocationOn as LocationIcon, People } from '@mui/icons-material';
 
@@ -114,18 +114,18 @@ export const Home = () => {
     <Box sx={{ 
       px: isMobile ? 1 : 2, 
       py: 0,
-      backgroundColor: '#000000',
+      backgroundColor: theme.palette.background.default,
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
       gap: 0
     }}>
-      {/* Leaderboard Section */}
+      {/* Stats Section */}
       <Box sx={{ 
         mt: 0,
         mb: 0,
         p: 0,
-        background: 'rgba(0,0,0,0.8)',
+        background: theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)',
         borderRadius: '0',
         border: 'none'
       }}>
@@ -139,16 +139,22 @@ export const Home = () => {
         }}>
           <Typography
             sx={{
-              color: '#fff',
+              color: theme.palette.mode === 'dark' ? theme.palette.text.primary : '#000000',
               fontWeight: 600,
-              fontSize: '1.5rem',
+              fontSize: { xs: '1.2rem', sm: '1.5rem' },
             }}
           >
             Top Meta Mansion Owners
           </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Typography sx={{ color: '#fff', opacity: 0.7 }}>ALL TIME</Typography>
-            <Typography sx={{ color: '#FFD700' }}>THIS MONTH</Typography>
+          <Box sx={{ display: 'flex', gap: 2, ml: 'auto', mr: 0 }}>
+            <Typography sx={{ 
+              color: theme.palette.mode === 'dark' ? theme.palette.text.secondary : 'rgba(0,0,0,0.7)',
+              fontSize: { xs: '0.75rem', sm: '0.875rem' }
+            }}>THIS MONTH</Typography>
+            <Typography sx={{ 
+              color: theme.palette.mode === 'dark' ? theme.palette.primary.main : '#000000',
+              fontSize: { xs: '0.75rem', sm: '0.875rem' }
+            }}>ALL TIME</Typography>
           </Box>
         </Box>
 
@@ -202,54 +208,54 @@ export const Home = () => {
                 alignItems: 'center',
                 gap: 2,
                 p: 2,
-                background: 'rgba(255,255,255,0.05)',
                 borderRadius: '12px',
-                border: '1px solid rgba(255,215,0,0.1)',
+                background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
                 '&:hover': {
-                  borderColor: 'rgba(255,215,0,0.3)',
-                  background: 'rgba(255,255,255,0.08)'
-                }
+                  background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                },
               }}
             >
               <Typography
                 sx={{
-                  color: user.rank <= 3 ? '#FFD700' : '#fff',
-                  fontWeight: 'bold',
-                  fontSize: '1.2rem',
-                  minWidth: '30px'
+                  color: theme.palette.mode === 'dark' ? theme.palette.text.secondary : 'rgba(0,0,0,0.7)',
+                  fontWeight: 600,
+                  width: '24px',
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' }
                 }}
               >
-                {user.rank}
+                #{user.rank}
               </Typography>
-              <Avatar
-                src={user.avatar}
-                sx={{
-                  width: 40,
-                  height: 40,
-                  border: '2px solid rgba(255,215,0,0.3)'
-                }}
-              />
+              <Avatar src={user.avatar} sx={{ width: { xs: 32, sm: 40 }, height: { xs: 32, sm: 40 } }} />
               <Box sx={{ flex: 1 }}>
-                <Typography sx={{ color: '#fff', fontWeight: 600 }}>
+                <Typography sx={{ 
+                  color: theme.palette.mode === 'dark' ? theme.palette.text.primary : '#000000', 
+                  fontWeight: 600,
+                  fontSize: { xs: '0.875rem', sm: '1rem' }
+                }}>
                   {user.name}
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>
-                    {user.mansions}
-                  </Typography>
-                  <Typography sx={{ color: '#FFD700', fontSize: '0.9rem' }}>
-                    • {user.eth}
-                  </Typography>
-                </Box>
-                <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem' }}>
+                <Typography sx={{ 
+                  color: theme.palette.mode === 'dark' ? theme.palette.text.secondary : 'rgba(0,0,0,0.7)', 
+                  fontSize: { xs: '0.7rem', sm: '0.875rem' }
+                }}>
+                  {user.mansions}
+                </Typography>
+              </Box>
+              <Box sx={{ textAlign: 'right' }}>
+                <Typography sx={{ 
+                  color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000', 
+                  fontWeight: 600,
+                  fontSize: { xs: '0.875rem', sm: '1rem' }
+                }}>
+                  {user.eth}
+                </Typography>
+                <Typography sx={{ 
+                  color: theme.palette.mode === 'dark' ? theme.palette.text.secondary : 'rgba(0,0,0,0.7)', 
+                  fontSize: { xs: '0.7rem', sm: '0.875rem' }
+                }}>
                   {user.latest}
                 </Typography>
               </Box>
-              {user.rank <= 3 && (
-                <Typography sx={{ color: '#FFD700', fontSize: '1.5rem' }}>
-                  🏆
-                </Typography>
-              )}
             </Box>
           ))}
         </Box>
@@ -261,11 +267,11 @@ export const Home = () => {
         }}>
           <Button
             sx={{
-              color: '#FFD700',
-              borderColor: 'rgba(255,215,0,0.3)',
+              color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+              borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.3)' : 'rgba(0,0,0,0.3)',
               '&:hover': {
-                borderColor: '#FFD700',
-                background: 'rgba(255,215,0,0.1)'
+                borderColor: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.1)'
               }
             }}
           >
@@ -274,73 +280,149 @@ export const Home = () => {
         </Box>
       </Box>
 
-      {/* Trending Items Section */}
-      <Paper 
-        sx={{ 
-          p: 1, 
-          mb: 4,
-          mt: 2,
-          background: 'rgba(255, 255, 255, 0.05)',
-          borderRadius: 0
-        }}
-      >
-        <Typography 
-          variant="h6" 
-          sx={{ 
-            mb: 1, 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 1,
-            color: '#FFD700',
-            fontWeight: 'bold',
-          }}
-        >
-          <TrendingUp sx={{ color: '#FFD700' }} /> Trending Items
-        </Typography>
-        <Grid container spacing={2}>
+      {/* Trending Items */}
+      <Box sx={{ mt: 4, px: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography
+            variant="h5"
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 600,
+              fontSize: { xs: '1.2rem', sm: '1.5rem' }
+            }}
+          >
+            Trending Items
+          </Typography>
+          <Button
+            startIcon={<TrendingUp />}
+            sx={{
+              color: theme.palette.text.secondary,
+              '&:hover': {
+                color: theme.palette.primary.main
+              }
+            }}
+          >
+            View All
+          </Button>
+        </Box>
+        <Grid container spacing={3}>
           {trendingItems.map((item) => (
             <Grid item xs={12} sm={6} md={4} key={item.id}>
-              <Card sx={{ 
-                height: '100%',
-                background: 'rgba(255, 255, 255, 0.05)',
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                },
-              }}>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={item.image}
-                  alt={item.name}
-                  sx={{ objectFit: 'cover' }}
-                />
-                <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{item.name}</Typography>
-                    <Chip 
-                      label={item.discount} 
-                      color="error" 
-                      size="small"
-                      sx={{ fontWeight: 'bold' }}
-                    />
+              <Card
+                sx={{
+                  background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  transition: 'transform 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    '& .card-image': {
+                      transform: 'scale(1.05)'
+                    }
+                  }
+                }}
+              >
+                <Box sx={{ position: 'relative', pt: '75%' }}>
+                  <CardMedia
+                    component="img"
+                    image={item.image}
+                    alt={item.name}
+                    className="card-image"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease'
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      top: 12,
+                      left: 12,
+                      background: theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.9)',
+                      borderRadius: '8px',
+                      px: 1,
+                      py: 0.5
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: theme.palette.text.primary,
+                        fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                        fontWeight: 600
+                      }}
+                    >
+                      {item.category}
+                    </Typography>
                   </Box>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    {item.category}
+                  {item.discount && (
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 12,
+                        right: 12,
+                        background: theme.palette.primary.main,
+                        borderRadius: '8px',
+                        px: 1,
+                        py: 0.5
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          color: theme.palette.mode === 'dark' ? '#000' : '#fff',
+                          fontSize: '0.75rem',
+                          fontWeight: 600
+                        }}
+                      >
+                        {item.discount} OFF
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+                <CardContent>
+                  <Typography
+                    sx={{
+                      color: theme.palette.text.primary,
+                      fontWeight: 600,
+                      fontSize: { xs: '0.875rem', sm: '1rem' },
+                      mb: 1
+                    }}
+                  >
+                    {item.name}
                   </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                    <Rating value={item.rating} precision={0.1} readOnly size="small" />
-                    <Typography variant="body2" color="text.secondary">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                    <Rating value={item.rating} size="small" readOnly />
+                    <Typography
+                      sx={{
+                        color: theme.palette.text.secondary,
+                        fontSize: { xs: '0.7rem', sm: '0.75rem' }
+                      }}
+                    >
                       ({item.sales} sales)
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="h6" sx={{ color: '#FFD700' }}>
+                    <Typography
+                      sx={{
+                        color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
+                        fontWeight: 600,
+                        fontSize: { xs: '0.875rem', sm: '1rem' }
+                      }}
+                    >
                       {item.price}
                     </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Timer fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      <Timer sx={{ color: theme.palette.text.secondary, fontSize: { xs: '0.875rem', sm: '1rem' } }} />
+                      <Typography
+                        sx={{
+                          color: theme.palette.text.secondary,
+                          fontSize: { xs: '0.7rem', sm: '0.75rem' }
+                        }}
+                      >
                         {item.timeLeft}
                       </Typography>
                     </Box>
@@ -350,7 +432,7 @@ export const Home = () => {
             </Grid>
           ))}
         </Grid>
-      </Paper>
+      </Box>
 
       {/* Game Cards Section */}
       <Paper 
@@ -459,82 +541,68 @@ export const Home = () => {
       </Paper>
 
       {/* FAQ Section */}
-      <Paper sx={{ 
-        p: 2, 
-        mt: 2,
-        mb: 4,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(10px)',
-        borderRadius: 0
-      }}>
+      <Box sx={{ mt: 4, px: 2 }}>
         <Typography
-          variant="h4"
+          variant="h5"
           sx={{
-            color: '#FFD700',
-            fontWeight: 'bold',
-            mb: 4,
-            textAlign: 'left',
-            pl: 0
+            color: theme.palette.text.primary,
+            fontWeight: 600,
+            mb: 3
           }}
         >
-          Frequently asked questions
+          Frequently Asked Questions
         </Typography>
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {faqs.map((faq) => (
-            <React.Fragment key={faq.id}>
+            <Paper
+              key={faq.id}
+              elevation={0}
+              sx={{
+                background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                }
+              }}
+            >
               <Box
                 onClick={() => handleExpandFaq(faq.id)}
                 sx={{
-                  py: 3,
+                  p: 2,
                   cursor: 'pointer',
-                  '&:hover': {
-                    '& .question': {
-                      color: '#FFD700',
-                    },
-                  },
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
               >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography
-                    variant="h6"
-                    className="question"
-                    sx={{
-                      color: '#fff',
-                      transition: 'color 0.2s',
-                      fontSize: '0.9rem',
-                      flex: 1,
-                      textAlign: 'left'
-                    }}
-                  >
-                    {faq.question}
-                  </Typography>
-                  {expandedFaq === faq.id ? (
-                    <RemoveIcon sx={{ color: '#FFD700', fontSize: '1.2rem' }} />
-                  ) : (
-                    <AddIcon sx={{ color: '#FFD700', fontSize: '1.2rem' }} />
-                  )}
-                </Box>
-                <Collapse in={expandedFaq === faq.id}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: 'rgba(255, 255, 255, 0.7)',
-                      mt: 2,
-                      mb: 3,
-                      pl: 2,
-                      fontSize: '0.8rem',
-                      lineHeight: 1.4
-                    }}
-                  >
+                <Typography sx={{ color: theme.palette.text.primary, fontWeight: 500 }}>
+                  {faq.question}
+                </Typography>
+                <IconButton
+                  size="small"
+                  sx={{
+                    color: theme.palette.text.secondary,
+                    transform: expandedFaq === faq.id ? 'rotate(180deg)' : 'none',
+                    transition: 'transform 0.3s ease'
+                  }}
+                >
+                  {expandedFaq === faq.id ? <RemoveIcon /> : <AddIcon />}
+                </IconButton>
+              </Box>
+              <Collapse in={expandedFaq === faq.id}>
+                <Divider sx={{ opacity: 0.1 }} />
+                <Box sx={{ p: 2 }}>
+                  <Typography sx={{ color: theme.palette.text.secondary }}>
                     {faq.answer}
                   </Typography>
-                </Collapse>
-              </Box>
-              <Divider sx={{ borderColor: 'rgba(255, 215, 0, 0.1)' }} />
-            </React.Fragment>
+                </Box>
+              </Collapse>
+            </Paper>
           ))}
         </Box>
-      </Paper>
+      </Box>
 
       {/* Footer */}
       <Box 
@@ -559,19 +627,23 @@ export const Home = () => {
         <Box 
           sx={{ 
             display: 'flex', 
-            justifyContent: 'space-between', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'center', 
+            alignItems: 'center',
             width: '100%',
             maxWidth: '1200px',
-            px: 2
+            px: 2,
+            gap: { xs: 1, sm: 3 }
           }}
         >
           <Typography 
             variant="body2" 
             sx={{ 
-              color: 'rgba(255, 255, 255, 0.5)',
+              color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
               cursor: 'pointer',
+              fontSize: { xs: '0.7rem', sm: '0.875rem' },
               '&:hover': {
-                color: '#FFD700'
+                color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000'
               }
             }}
           >
@@ -580,7 +652,8 @@ export const Home = () => {
           <Typography 
             variant="body2" 
             sx={{ 
-              color: 'rgba(255, 255, 255, 0.5)',
+              color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+              fontSize: { xs: '0.7rem', sm: '0.875rem' },
               textAlign: 'center'
             }}
           >
@@ -589,10 +662,11 @@ export const Home = () => {
           <Typography 
             variant="body2" 
             sx={{ 
-              color: 'rgba(255, 255, 255, 0.5)',
+              color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
               cursor: 'pointer',
+              fontSize: { xs: '0.7rem', sm: '0.875rem' },
               '&:hover': {
-                color: '#FFD700'
+                color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000'
               }
             }}
           >

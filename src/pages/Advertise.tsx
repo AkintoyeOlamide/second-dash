@@ -187,421 +187,485 @@ export const Advertise = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      {/* Header Section */}
-      <Box sx={{ mb: 6, textAlign: 'left' }}>
-        <Typography
-          variant="h3"
-          sx={{
-            color: '#FDEB91',
-            fontWeight: 'bold',
-            mb: 2,
-            display: 'block'
-          }}
-        >
-          Advertise in Meta Mansions
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            color: 'text.secondary',
-            maxWidth: '600px',
-          }}
-        >
-          Reach visitors by advertising in Meta Mansions Spaces.
-        </Typography>
-      </Box>
-
-      {/* Popular Mansions Grid */}
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
+    <Box sx={{ 
+      minHeight: '100vh',
+      background: theme.palette.background.default,
+      width: '100%',
+      pt: { xs: 8, sm: 0 }
+    }}>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        {/* Header Section */}
+        <Box sx={{ mb: 6, textAlign: 'left' }}>
           <Typography
-            variant="h4"
+            variant="h3"
             sx={{
-              color: '#FDEB91',
+              color: theme.palette.mode === 'dark' ? '#fff' : '#000',
               fontWeight: 'bold',
               mb: 2,
-              textAlign: 'left'
+              display: 'block',
+              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' }
             }}
           >
-            Featured Mansions
+            Advertise in Meta Mansions
           </Typography>
-        </Grid>
-        {popularMansions.map((mansion) => (
-          <Grid item xs={12} md={4} key={mansion.id}>
-            <Card
-              sx={{
-                height: '100%',
-                background: 'rgba(0, 0, 0, 0.8)',
-                border: '1px solid rgba(255, 215, 0, 0.2)',
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="200"
-                image={mansion.image}
-                alt={mansion.name}
-                sx={{ objectFit: 'cover' }}
-              />
-              <CardContent>
-                <Typography variant="h6" sx={{ color: '#FDEB91', mb: 1 }}>
-                  {mansion.name}
-                </Typography>
-                <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-                  <Chip
-                    icon={<Visibility />}
-                    label={`${mansion.visitors} visitors`}
-                    size="small"
-                    sx={{ backgroundColor: 'rgba(255, 215, 0, 0.1)' }}
-                  />
-                  <Chip
-                    icon={<LocationOn />}
-                    label={mansion.location}
-                    size="small"
-                    sx={{ backgroundColor: 'rgba(255, 215, 0, 0.1)' }}
-                  />
-                </Stack>
-                <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                  {mansion.description}
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                  <Typography variant="h6" sx={{ color: '#FDEB91' }}>
-                    {mansion.price}
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    startIcon={<ShoppingCart />}
-                    onClick={() => handleOpenDialog(mansion)}
-                    sx={{
-                      borderColor: '#FDEB91',
-                      color: '#FDEB91',
-                      '&:hover': {
-                        borderColor: '#FDEB91',
-                        backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                      },
-                    }}
-                  >
-                    Advertise Here
-                  </Button>
-                </Box>
-                <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
-                  {mansion.advertisingSpaces.map((space: string) => (
-                    <Chip
-                      key={space}
-                      label={space}
-                      size="small"
-                      sx={{ backgroundColor: 'rgba(255, 215, 0, 0.1)' }}
-                    />
-                  ))}
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      {/* Most Visited Mansions List */}
-      <Box sx={{ mt: 8 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            color: '#FDEB91',
-            mb: 4,
-            textAlign: 'left',
-            fontWeight: 'bold'
-          }}
-        >
-          Most Visited Meta Mansions
-        </Typography>
-        <Grid container spacing={4}>
-          {[...popularMansions]
-            .sort((a, b) => {
-              const aVisitors = parseInt(a.visitors.replace(/[^0-9]/g, ''));
-              const bVisitors = parseInt(b.visitors.replace(/[^0-9]/g, ''));
-              return bVisitors - aVisitors;
-            })
-            .slice(0, 6)
-            .map((mansion) => (
-              <Grid item xs={12} md={4} key={mansion.id}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    background: 'rgba(0, 0, 0, 0.8)',
-                    border: '1px solid rgba(255, 215, 0, 0.2)',
-                    transition: 'transform 0.2s',
-                    '&:hover': {
-                      transform: 'translateY(-4px)',
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={mansion.image}
-                    alt={mansion.name}
-                    sx={{ objectFit: 'cover' }}
-                  />
-                  <CardContent>
-                    <Typography variant="h6" sx={{ color: '#FDEB91', mb: 1 }}>
-                      {mansion.name}
-                    </Typography>
-                    <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-                      <Chip
-                        icon={<Visibility />}
-                        label={`${mansion.visitors} visitors`}
-                        size="small"
-                        sx={{ backgroundColor: 'rgba(255, 215, 0, 0.1)' }}
-                      />
-                      <Chip
-                        icon={<LocationOn />}
-                        label={mansion.location}
-                        size="small"
-                        sx={{ backgroundColor: 'rgba(255, 215, 0, 0.1)' }}
-                      />
-                    </Stack>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                      {mansion.description}
-                    </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                      <Typography variant="h6" sx={{ color: '#FDEB91' }}>
-                        {mansion.price}
-                      </Typography>
-                      <Button
-                        variant="outlined"
-                        startIcon={<ShoppingCart />}
-                        onClick={() => handleOpenDialog(mansion)}
-                        sx={{
-                          borderColor: '#FDEB91',
-                          color: '#FDEB91',
-                          '&:hover': {
-                            borderColor: '#FDEB91',
-                            backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                          },
-                        }}
-                      >
-                        Advertise Here
-                      </Button>
-                    </Box>
-                    <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
-                      {mansion.advertisingSpaces.map((space: string) => (
-                        <Chip
-                          key={space}
-                          label={space}
-                          size="small"
-                          sx={{ backgroundColor: 'rgba(255, 215, 0, 0.1)' }}
-                        />
-                      ))}
-                    </Stack>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-        </Grid>
-      </Box>
-
-      {/* Footer */}
-      <Box 
-        sx={{ 
-          mt: 4,
-          mb: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 1
-        }}
-      >
-        <img 
-          src="/gold-logo.PNG"
-          alt="Meta Mansions Logo"
-          style={{
-            height: '40px',
-            objectFit: 'contain',
-            filter: 'drop-shadow(0px 2px 4px rgba(255, 215, 0, 0.3))',
-          }}
-        />
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            width: '100%',
-            maxWidth: '1200px',
-            px: 2
-          }}
-        >
-          <Typography 
-            variant="body2" 
-            sx={{ 
-              color: 'rgba(255, 255, 255, 0.5)',
-              cursor: 'pointer',
-              '&:hover': {
-                color: '#FDEB91'
-              }
+          <Typography
+            variant="h6"
+            sx={{
+              color: 'rgba(255,255,255,0.7)',
+              maxWidth: '600px',
+              fontSize: { xs: '1rem', sm: '1.1rem' }
             }}
           >
-            Terms of Use
-          </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ 
-              color: 'rgba(255, 255, 255, 0.5)',
-              textAlign: 'center'
-            }}
-          >
-            © 2025 Meta Mansions. All rights reserved.
-          </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ 
-              color: 'rgba(255, 255, 255, 0.5)',
-              cursor: 'pointer',
-              '&:hover': {
-                color: '#FDEB91'
-              }
-            }}
-          >
-            Privacy Policy
+            Reach visitors by advertising in Meta Mansions Spaces.
           </Typography>
         </Box>
-      </Box>
 
-      {/* Advertising Form Dialog */}
-      <Dialog
-        open={dialogOpen}
-        onClose={handleCloseDialog}
-        maxWidth="sm"
-        fullWidth
-        PaperProps={{
-          sx: {
-            background: 'rgba(0, 0, 0, 0.95)',
-            border: '1px solid rgba(255, 215, 0, 0.2)',
-            backdropFilter: 'blur(10px)',
-          }
-        }}
-      >
-        <DialogTitle sx={{ color: '#FDEB91' }}>
-          Advertise in {selectedMansion?.name}
-        </DialogTitle>
-        <DialogContent>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
-            <TextField
-              label="Brand Name"
-              fullWidth
-              value={advertisingForm.brandName}
-              onChange={(e) => setAdvertisingForm({ ...advertisingForm, brandName: e.target.value })}
+        {/* Popular Mansions Grid */}
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Typography
+              variant="h4"
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(255, 255, 255, 0.7)',
-                },
+                color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+                fontWeight: 'bold',
+                mb: 1,
+                textAlign: 'left',
+                fontSize: { xs: '1.5rem', sm: '1.75rem' }
               }}
-            />
-            <TextField
-              label="Email"
-              type="email"
-              fullWidth
-              value={advertisingForm.email}
-              onChange={(e) => setAdvertisingForm({ ...advertisingForm, email: e.target.value })}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(255, 255, 255, 0.7)',
-                },
-              }}
-            />
-            <FormControl fullWidth>
-              <InputLabel sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                Advertising Space
-              </InputLabel>
-              <Select
-                value={advertisingForm.advertisingSpace}
-                onChange={(e) => setAdvertisingForm({ ...advertisingForm, advertisingSpace: e.target.value })}
-                label="Advertising Space"
+            >
+              Featured Mansions
+            </Typography>
+          </Grid>
+          {popularMansions.map((mansion) => (
+            <Grid item xs={12} md={4} key={mansion.id}>
+              <Card
                 sx={{
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'rgba(255, 255, 255, 0.23)',
-                  },
-                  '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#FDEB91',
+                  height: '100%',
+                  background: theme.palette.background.paper,
+                  border: `1px solid ${theme.palette.divider}`,
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    borderColor: theme.palette.primary.main,
                   },
                 }}
               >
-                {advertisingOptions.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label} - {option.price}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              label="Duration (days)"
-              type="number"
-              fullWidth
-              value={advertisingForm.duration}
-              onChange={(e) => setAdvertisingForm({ ...advertisingForm, duration: e.target.value })}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(255, 255, 255, 0.7)',
-                },
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={mansion.image}
+                  alt={mansion.name}
+                  sx={{ objectFit: 'cover' }}
+                />
+                <CardContent>
+                  <Typography
+                    sx={{
+                      color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+                      fontSize: '1rem',
+                      fontWeight: 700,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      mb: 1.5
+                    }}
+                  >
+                    {mansion.name}
+                  </Typography>
+                  <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+                    <Chip
+                      icon={<Visibility />}
+                      label={`${mansion.visitors} visitors`}
+                      size="small"
+                      sx={{ 
+                        backgroundColor: theme.palette.mode === 'dark' 
+                          ? 'rgba(255, 215, 0, 0.1)' 
+                          : 'rgba(0, 0, 0, 0.1)',
+                        color: theme.palette.text.primary
+                      }}
+                    />
+                    <Chip
+                      icon={<LocationOn />}
+                      label={mansion.location}
+                      size="small"
+                      sx={{ 
+                        backgroundColor: theme.palette.mode === 'dark' 
+                          ? 'rgba(255, 215, 0, 0.1)' 
+                          : 'rgba(0, 0, 0, 0.1)',
+                        color: theme.palette.text.primary
+                      }}
+                    />
+                  </Stack>
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 2 }}>
+                    {mansion.description}
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                    <Typography variant="h6" sx={{ color: '#FFD700' }}>
+                      {mansion.price}
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      startIcon={<ShoppingCart />}
+                      onClick={() => handleOpenDialog(mansion)}
+                      sx={{
+                        borderColor: '#FFD700',
+                        color: '#FFD700',
+                        '&:hover': {
+                          borderColor: '#FFD700',
+                          backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                        },
+                      }}
+                    >
+                      Advertise Here
+                    </Button>
+                  </Box>
+                  <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+                    {mansion.advertisingSpaces.map((space: string) => (
+                      <Chip
+                        key={space}
+                        label={space}
+                        size="small"
+                        sx={{ 
+                          backgroundColor: theme.palette.mode === 'dark' 
+                            ? 'rgba(255, 215, 0, 0.1)' 
+                            : 'rgba(0, 0, 0, 0.1)',
+                          color: theme.palette.text.primary
+                        }}
+                      />
+                    ))}
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Most Visited Mansions List */}
+        <Box sx={{ mt: 8 }}>
+          <Typography
+            variant="h4"
+            sx={{
+              color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+              mb: 4,
+              textAlign: 'left',
+              fontWeight: 'bold',
+              fontSize: { xs: '1.5rem', sm: '1.75rem' }
+            }}
+          >
+            Most Visited Meta Mansions
+          </Typography>
+          <Grid container spacing={4}>
+            {[...popularMansions]
+              .sort((a, b) => {
+                const aVisitors = parseInt(a.visitors.replace(/[^0-9]/g, ''));
+                const bVisitors = parseInt(b.visitors.replace(/[^0-9]/g, ''));
+                return bVisitors - aVisitors;
+              })
+              .slice(0, 6)
+              .map((mansion) => (
+                <Grid item xs={12} md={4} key={mansion.id}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      background: theme.palette.background.paper,
+                      border: `1px solid ${theme.palette.divider}`,
+                      transition: 'transform 0.2s',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        borderColor: theme.palette.primary.main,
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={mansion.image}
+                      alt={mansion.name}
+                      sx={{ objectFit: 'cover' }}
+                    />
+                    <CardContent>
+                      <Typography
+                        sx={{
+                          color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+                          fontSize: '1rem',
+                          fontWeight: 700,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          mb: 1.5
+                        }}
+                      >
+                        {mansion.name}
+                      </Typography>
+                      <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+                        <Chip
+                          icon={<Visibility />}
+                          label={`${mansion.visitors} visitors`}
+                          size="small"
+                          sx={{ 
+                            backgroundColor: theme.palette.mode === 'dark' 
+                              ? 'rgba(255, 215, 0, 0.1)' 
+                              : 'rgba(0, 0, 0, 0.1)',
+                            color: theme.palette.text.primary
+                          }}
+                        />
+                        <Chip
+                          icon={<LocationOn />}
+                          label={mansion.location}
+                          size="small"
+                          sx={{ 
+                            backgroundColor: theme.palette.mode === 'dark' 
+                              ? 'rgba(255, 215, 0, 0.1)' 
+                              : 'rgba(0, 0, 0, 0.1)',
+                            color: theme.palette.text.primary
+                          }}
+                        />
+                      </Stack>
+                      <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 2 }}>
+                        {mansion.description}
+                      </Typography>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                        <Typography variant="h6" sx={{ color: '#FFD700' }}>
+                          {mansion.price}
+                        </Typography>
+                        <Button
+                          variant="outlined"
+                          startIcon={<ShoppingCart />}
+                          onClick={() => handleOpenDialog(mansion)}
+                          sx={{
+                            borderColor: '#FFD700',
+                            color: '#FFD700',
+                            '&:hover': {
+                              borderColor: '#FFD700',
+                              backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                            },
+                          }}
+                        >
+                          Advertise Here
+                        </Button>
+                      </Box>
+                      <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+                        {mansion.advertisingSpaces.map((space: string) => (
+                          <Chip
+                            key={space}
+                            label={space}
+                            size="small"
+                            sx={{ 
+                              backgroundColor: theme.palette.mode === 'dark' 
+                                ? 'rgba(255, 215, 0, 0.1)' 
+                                : 'rgba(0, 0, 0, 0.1)',
+                              color: theme.palette.text.primary
+                            }}
+                          />
+                        ))}
+                      </Stack>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
+        </Box>
+
+        {/* Footer */}
+        <Box 
+          sx={{ 
+            mt: 4,
+            mb: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 1
+          }}
+        >
+          <img 
+            src="/gold-logo.PNG"
+            alt="Meta Mansions Logo"
+            style={{
+              height: '40px',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0px 2px 4px rgba(255, 215, 0, 0.3))',
+            }}
+          />
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              width: '100%',
+              maxWidth: '1200px',
+              px: 2
+            }}
+          >
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: theme.palette.text.secondary,
+                cursor: 'pointer',
+                '&:hover': {
+                  color: theme.palette.primary.main
+                }
               }}
-            />
-            <TextField
-              label="Message"
-              multiline
-              rows={4}
-              fullWidth
-              value={advertisingForm.message}
-              onChange={(e) => setAdvertisingForm({ ...advertisingForm, message: e.target.value })}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(255, 255, 255, 0.7)',
-                },
+            >
+              Terms of Use
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: theme.palette.text.secondary,
+                textAlign: 'center'
               }}
-            />
+            >
+              © 2025 Meta Mansions. All rights reserved.
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: theme.palette.text.secondary,
+                cursor: 'pointer',
+                '&:hover': {
+                  color: theme.palette.primary.main
+                }
+              }}
+            >
+              Privacy Policy
+            </Typography>
           </Box>
-        </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
-          <Button
-            onClick={handleCloseDialog}
-            sx={{
-              color: 'text.secondary',
-              '&:hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
-              },
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-            sx={{
-              backgroundColor: '#FDEB91',
-              color: '#000',
-              '&:hover': {
-                backgroundColor: '#FFE55C',
-              },
-            }}
-          >
-            Submit Request
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Container>
+        </Box>
+
+        {/* Advertising Form Dialog */}
+        <Dialog
+          open={dialogOpen}
+          onClose={handleCloseDialog}
+          maxWidth="sm"
+          fullWidth
+          PaperProps={{
+            sx: {
+              background: theme.palette.background.paper,
+              border: `1px solid ${theme.palette.divider}`,
+            }
+          }}
+        >
+          <DialogTitle sx={{ color: theme.palette.primary.main }}>
+            Advertise in {selectedMansion?.name}
+          </DialogTitle>
+          <DialogContent>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+              <TextField
+                label="Brand Name"
+                fullWidth
+                value={advertisingForm.brandName}
+                onChange={(e) => setAdvertisingForm({ ...advertisingForm, brandName: e.target.value })}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    color: theme.palette.text.primary,
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.palette.text.secondary,
+                  },
+                }}
+              />
+              <TextField
+                label="Email"
+                type="email"
+                fullWidth
+                value={advertisingForm.email}
+                onChange={(e) => setAdvertisingForm({ ...advertisingForm, email: e.target.value })}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    color: theme.palette.text.primary,
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.palette.text.secondary,
+                  },
+                }}
+              />
+              <FormControl fullWidth>
+                <InputLabel sx={{ color: theme.palette.text.secondary }}>
+                  Advertising Space
+                </InputLabel>
+                <Select
+                  value={advertisingForm.advertisingSpace}
+                  onChange={(e) => setAdvertisingForm({ ...advertisingForm, advertisingSpace: e.target.value })}
+                  label="Advertising Space"
+                  sx={{
+                    color: theme.palette.text.primary,
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: theme.palette.divider,
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: theme.palette.primary.main,
+                    },
+                  }}
+                >
+                  {advertisingOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label} - {option.price}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <TextField
+                label="Duration (days)"
+                type="number"
+                fullWidth
+                value={advertisingForm.duration}
+                onChange={(e) => setAdvertisingForm({ ...advertisingForm, duration: e.target.value })}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    color: theme.palette.text.primary,
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.palette.text.secondary,
+                  },
+                }}
+              />
+              <TextField
+                label="Message"
+                multiline
+                rows={4}
+                fullWidth
+                value={advertisingForm.message}
+                onChange={(e) => setAdvertisingForm({ ...advertisingForm, message: e.target.value })}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    color: theme.palette.text.primary,
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.palette.text.secondary,
+                  },
+                }}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions sx={{ p: 3 }}>
+            <Button
+              onClick={handleCloseDialog}
+              sx={{
+                color: theme.palette.text.secondary,
+                '&:hover': {
+                  backgroundColor: theme.palette.mode === 'dark' 
+                    ? 'rgba(255, 255, 255, 0.08)' 
+                    : 'rgba(0, 0, 0, 0.05)',
+                },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              sx={{
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.mode === 'dark' ? '#000' : '#fff',
+                '&:hover': {
+                  backgroundColor: theme.palette.primary.dark,
+                },
+              }}
+            >
+              Submit Request
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+    </Box>
   );
 };
 

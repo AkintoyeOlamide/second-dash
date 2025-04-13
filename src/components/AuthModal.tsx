@@ -84,17 +84,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, initialMode
       PaperProps={{
         sx: {
           backgroundColor: 'rgba(0, 0, 0, 0.95)',
-          backdropFilter: 'blur(5px)',
           borderRadius: '12px',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
           width: '100%',
           maxWidth: '320px',
           margin: '16px',
+          border: '1px solid rgba(255, 215, 0, 0.2)',
         },
       }}
       BackdropProps={{
         sx: {
-          backdropFilter: 'blur(2px)',
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
         },
       }}
     >

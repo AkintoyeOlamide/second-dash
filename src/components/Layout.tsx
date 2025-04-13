@@ -158,7 +158,7 @@ export const Layout: React.FC = () => {
         <Typography 
           variant="caption" 
           sx={{ 
-            color: '#FFFFFF', 
+            color: theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000', 
             display: 'block',
             fontFamily: '"Inter", sans-serif',
             letterSpacing: '0.5px',
@@ -171,7 +171,7 @@ export const Layout: React.FC = () => {
         <Typography 
           variant="subtitle1" 
           sx={{ 
-            color: '#FFFFFF', 
+            color: theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000', 
             fontWeight: 700,
             fontFamily: '"Inter", sans-serif',
             fontSize: '1.25rem',
@@ -192,49 +192,62 @@ export const Layout: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', background: '#000000' }}>
-      <TopNav onMenuClick={handleDrawerToggle} isMobile={isMobile} isMobileDrawer={mobileOpen} />
+    <Box sx={{ display: 'flex' }}>
+      <Box sx={{ 
+        position: 'fixed',
+        width: { sm: `${DRAWER_WIDTH}px` },
+        pr: 2,
+        borderRight: { sm: '1px solid' },
+        borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        height: '100vh',
+        zIndex: 1200
+      }}>
+        <TopNav onMenuClick={handleDrawerToggle} isMobile={isMobile} isMobileDrawer={mobileOpen} />
+      </Box>
       
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${240}px)` },
-          ml: { sm: `${240}px` },
-          mt: { xs: '64px', sm: 0 },
+          p: 0,
+          width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
+          ml: { sm: `${DRAWER_WIDTH}px` },
+          minHeight: '100vh',
+          background: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+          pt: { xs: '40px', sm: 0 },
+          px: { xs: 2, sm: 3 },
         }}
       >
         {/* Show stats and carousel only on the landing page and when authenticated */}
         {isLandingPage && isAuthenticated && (
-          <>
+          <Box sx={{ mt: '64px' }}>
             {/* Stats Section */}
             <Box sx={{ mb: 4 }}>
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} md={3}>
                   <StatBox 
-                    icon={<PeopleIcon sx={{ color: '#D7B953', fontSize: '1.5rem' }} />}
+                    icon={<PeopleIcon sx={{ color: theme.palette.mode === 'dark' ? '#D7B953' : '#000000', fontSize: '1.5rem' }} />}
                     title={statsData.visitors[currentStatsIndex].label}
                     value={statsData.visitors[currentStatsIndex].value}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <StatBox 
-                    icon={<AccountBalanceIcon sx={{ color: '#D7B953', fontSize: '1.5rem' }} />}
+                    icon={<AccountBalanceIcon sx={{ color: theme.palette.mode === 'dark' ? '#D7B953' : '#000000', fontSize: '1.5rem' }} />}
                     title={statsData.revenue[currentStatsIndex].label}
                     value={statsData.revenue[currentStatsIndex].value}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <StatBox 
-                    icon={<HomeIcon sx={{ color: '#D7B953', fontSize: '1.5rem' }} />}
+                    icon={<HomeIcon sx={{ color: theme.palette.mode === 'dark' ? '#D7B953' : '#000000', fontSize: '1.5rem' }} />}
                     title={statsData.players[currentStatsIndex].label}
                     value={statsData.players[currentStatsIndex].value}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <StatBox 
-                    icon={<CartIcon sx={{ color: '#D7B953', fontSize: '1.5rem' }} />}
+                    icon={<CartIcon sx={{ color: theme.palette.mode === 'dark' ? '#D7B953' : '#000000', fontSize: '1.5rem' }} />}
                     title={statsData.rewards[currentStatsIndex].label}
                     value={statsData.rewards[currentStatsIndex].value}
                   />
@@ -309,7 +322,6 @@ export const Layout: React.FC = () => {
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7))',
                         borderRadius: '12px',
                       }}
                     />
@@ -445,7 +457,7 @@ export const Layout: React.FC = () => {
                 ))}
               </Box>
             </Box>
-          </>
+          </Box>
         )}
 
         <Outlet />

@@ -359,7 +359,6 @@ export const Login: React.FC<LoginProps> = ({ onLogin, onVisitorLogin }) => {
             borderColor: 'rgba(255,215,0,0.2)',
             color: '#FFD700',
             background: 'linear-gradient(45deg, rgba(255,215,0,0.03), rgba(255,215,0,0.08))',
-            backdropFilter: 'blur(5px)',
             transition: 'all 0.3s ease',
             '&:hover': {
               background: 'linear-gradient(45deg, rgba(255,215,0,0.08), rgba(255,215,0,0.12))',

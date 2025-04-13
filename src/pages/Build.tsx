@@ -98,29 +98,26 @@ export default function Build() {
   return (
     <Box sx={{ 
       minHeight: '100vh', 
-      background: '#000000',
-      pt: 4,
-      pb: 8
+      pt: 8,
+      background: theme => theme.palette.mode === 'dark' ? '#000' : '#fff'
     }}>
       {/* Wallet Connection Modal */}
       <Dialog 
         open={showWalletModal} 
         onClose={handleCloseModal}
-        maxWidth="sm"
-        fullWidth
         PaperProps={{
           sx: {
-            background: 'rgba(0, 0, 0, 0.95)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 215, 0, 0.2)',
-            borderRadius: '24px',
-            color: '#fff'
-          }
-        }}
-        BackdropProps={{
-          sx: {
-            backdropFilter: 'blur(8px)',
-            backgroundColor: 'rgba(0, 0, 0, 0.7)'
+            background: theme => theme.palette.mode === 'dark' ? '#000' : '#fff',
+            border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 0, 0, 0.1)'}`,
+            borderRadius: 2,
+            minWidth: '300px',
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            margin: 0,
+            maxWidth: '90vw',
+            width: 'auto',
           }
         }}
       >
@@ -130,7 +127,10 @@ export default function Build() {
           alignItems: 'center',
           pb: 2
         }}>
-          <Typography variant="h6" sx={{ color: '#FFD700', fontWeight: 600 }}>
+          <Typography variant="h6" sx={{ 
+            color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
+            fontWeight: 600 
+          }}>
             Connect Your Wallet
           </Typography>
           {walletConnected && (
@@ -140,8 +140,10 @@ export default function Build() {
                 position: 'absolute',
                 right: 8,
                 top: 8,
-                color: 'rgba(255, 255, 255, 0.7)',
-                '&:hover': { color: '#FFD700' }
+                color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
+                '&:hover': { 
+                  color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000'
+                }
               }}
             >
               <CloseIcon />
@@ -150,11 +152,20 @@ export default function Build() {
         </DialogTitle>
         <DialogContent sx={{ py: 4 }}>
           <Box sx={{ textAlign: 'center', mb: 3 }}>
-            <WalletIcon sx={{ fontSize: 48, color: '#FFD700', mb: 2 }} />
-            <Typography variant="h6" sx={{ color: '#fff', mb: 1 }}>
+            <WalletIcon sx={{ 
+              fontSize: 48, 
+              color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
+              mb: 2 
+            }} />
+            <Typography variant="h6" sx={{ 
+              color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
+              mb: 1 
+            }}>
               Wallet Connection Required
             </Typography>
-            <Typography sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+            <Typography sx={{ 
+              color: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'
+            }}>
               Please connect your wallet to access the Build feature and customize your Meta Mansion.
             </Typography>
           </Box>
@@ -169,13 +180,17 @@ export default function Build() {
             startIcon={<WalletIcon />}
             onClick={handleConnectWallet}
             sx={{
-              background: 'linear-gradient(45deg, #FFD700 30%, #FFA500 90%)',
-              color: '#000',
+              background: theme => theme.palette.mode === 'dark' 
+                ? 'linear-gradient(45deg, #FFD700 30%, #FFA500 90%)'
+                : 'linear-gradient(45deg, #000000 30%, #333333 90%)',
+              color: '#fff !important',
               fontWeight: 'bold',
               px: 4,
               py: 1.5,
               '&:hover': {
-                background: 'linear-gradient(45deg, #FFA500 30%, #FFD700 90%)',
+                background: theme => theme.palette.mode === 'dark'
+                  ? 'linear-gradient(45deg, #FFA500 30%, #FFD700 90%)'
+                  : 'linear-gradient(45deg, #333333 30%, #000000 90%)',
               },
             }}
           >
@@ -216,40 +231,39 @@ export default function Build() {
         </Box>
 
         <Grid container spacing={4}>
-          {/* Left Sidebar - Components */}
+          {/* Left Sidebar - Component Selection */}
           <Grid item xs={12} md={3}>
             <Card
               sx={{
-                background: 'rgba(255,255,255,0.05)',
+                background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : '#f5f5f5',
                 borderRadius: '24px',
                 p: 3,
-                border: '1px solid rgba(255,215,0,0.2)',
-                backdropFilter: 'blur(10px)',
+                border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)'}`,
                 height: '100%'
               }}
             >
               <Typography
                 sx={{
-                  color: '#fff',
+                  color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                   fontWeight: 600,
                   mb: 3,
                   fontSize: '1.1rem'
                 }}
               >
-                Interior Components
+                Components
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {components.map((component) => (
                   <Button
                     key={component.id}
-                    startIcon={component.icon}
+                    variant={selectedComponent === component.id ? 'contained' : 'outlined'}
                     onClick={() => setSelectedComponent(component.id)}
                     sx={{
                       justifyContent: 'flex-start',
-                      color: selectedComponent === component.id ? '#FFD700' : '#fff',
-                      background: selectedComponent === component.id ? 'rgba(255,215,0,0.1)' : 'transparent',
+                      color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
+                      borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)',
                       '&:hover': {
-                        background: 'rgba(255,215,0,0.1)'
+                        background: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.05)'
                       }
                     }}
                   >
@@ -264,18 +278,17 @@ export default function Build() {
           <Grid item xs={12} md={6}>
             <Card
               sx={{
-                background: 'rgba(255,255,255,0.05)',
+                background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : '#f5f5f5',
                 borderRadius: '24px',
                 p: 4,
-                border: '1px solid rgba(255,215,0,0.2)',
-                backdropFilter: 'blur(10px)',
+                border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)'}`,
                 height: '100%'
               }}
             >
               <Box sx={{ mb: 4 }}>
                 <Typography
                   sx={{
-                    color: '#fff',
+                    color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                     fontWeight: 600,
                     mb: 2,
                     fontSize: '1.2rem'
@@ -286,7 +299,10 @@ export default function Build() {
                 
                 {/* Size Slider */}
                 <Box sx={{ mb: 3 }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
+                  <Typography sx={{ 
+                    color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', 
+                    mb: 1 
+                  }}>
                     Interior Space
                   </Typography>
                   <Slider
@@ -305,14 +321,19 @@ export default function Build() {
                       },
                     }}
                   />
-                  <Typography sx={{ color: '#FFD700', mt: 1 }}>
+                  <Typography sx={{ 
+                    color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
+                    mt: 1 
+                  }}>
                     {mansionSize}% of maximum size
                   </Typography>
                 </Box>
 
                 {/* Materials Selection */}
                 <FormControl fullWidth sx={{ mb: 3 }}>
-                  <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                  <InputLabel sx={{ 
+                    color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)' 
+                  }}>
                     Materials
                   </InputLabel>
                   <Select
@@ -322,18 +343,18 @@ export default function Build() {
                     MenuProps={{
                       PaperProps: {
                         sx: {
-                          bgcolor: '#000',
-                          color: '#fff',
-                          border: '1px solid rgba(255, 255, 255, 0.2)',
+                          bgcolor: theme => theme.palette.mode === 'dark' ? '#000' : '#fff',
+                          color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
+                          border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'}`,
                           '& .MuiMenuItem-root': {
-                            color: '#fff !important',
+                            color: theme => `${theme.palette.mode === 'dark' ? '#fff' : '#000'} !important`,
                             '&:hover': {
-                              bgcolor: 'rgba(255,215,0,0.1)',
+                              bgcolor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.05)',
                             },
                             '&.Mui-selected': {
-                              bgcolor: 'rgba(255,215,0,0.2)',
+                              bgcolor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)',
                               '&:hover': {
-                                bgcolor: 'rgba(255,215,0,0.3)',
+                                bgcolor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.3)' : 'rgba(0,0,0,0.15)',
                               },
                             },
                           },
@@ -341,29 +362,15 @@ export default function Build() {
                       },
                     }}
                     sx={{
-                      color: '#fff',
+                      color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                       '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'rgba(255,215,0,0.2)',
+                        borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)',
                       },
                       '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'rgba(255,215,0,0.4)',
+                        borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(0,0,0,0.2)',
                       },
                       '& .MuiSelect-icon': {
-                        color: '#fff',
-                      },
-                      '& .MuiInputBase-input': {
-                        color: '#fff !important',
-                      },
-                      '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                          borderColor: 'rgba(255,215,0,0.2)',
-                        },
-                        '&:hover fieldset': {
-                          borderColor: 'rgba(255,215,0,0.4)',
-                        },
-                        '&.Mui-focused fieldset': {
-                          borderColor: 'rgba(255,215,0,0.4)',
-                        },
+                        color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                       },
                     }}
                   >
@@ -372,14 +379,14 @@ export default function Build() {
                         key={material.value} 
                         value={material.value}
                         sx={{
-                          color: '#fff !important',
+                          color: theme => `${theme.palette.mode === 'dark' ? '#fff' : '#000'} !important`,
                           '&:hover': {
-                            backgroundColor: 'rgba(255,215,0,0.1) !important',
+                            backgroundColor: theme => `${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0,0,0,0.05)'} !important`,
                           },
                           '&.Mui-selected': {
-                            backgroundColor: 'rgba(255,215,0,0.2) !important',
+                            backgroundColor: theme => `${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)'} !important`,
                             '&:hover': {
-                              backgroundColor: 'rgba(255,215,0,0.3) !important',
+                              backgroundColor: theme => `${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.3)' : 'rgba(0,0,0,0.15)'} !important`,
                             },
                           },
                         }}
@@ -391,10 +398,14 @@ export default function Build() {
                 </FormControl>
 
                 {/* AI Builder Section */}
-                <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid rgba(255,215,0,0.2)' }}>
+                <Box sx={{ 
+                  mt: 4, 
+                  pt: 4, 
+                  borderTop: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)'}` 
+                }}>
                   <Typography
                     sx={{
-                      color: '#fff',
+                      color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                       fontWeight: 600,
                       mb: 2,
                       fontSize: '1.2rem'
@@ -404,7 +415,7 @@ export default function Build() {
                   </Typography>
                   <Typography
                     sx={{
-                      color: 'rgba(255,255,255,0.7)',
+                      color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
                       mb: 3,
                       fontSize: '0.9rem'
                     }}
@@ -420,16 +431,16 @@ export default function Build() {
                     sx={{
                       mb: 3,
                       '& .MuiOutlinedInput-root': {
-                        color: '#fff',
+                        color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                         '& fieldset': {
-                          borderColor: 'rgba(255,215,0,0.2)',
+                          borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)',
                         },
                         '&:hover fieldset': {
-                          borderColor: 'rgba(255,215,0,0.4)',
+                          borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(0,0,0,0.2)',
                         },
                       },
                       '& .MuiInputLabel-root': {
-                        color: 'rgba(255,255,255,0.7)',
+                        color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
                       },
                     }}
                   />
@@ -439,85 +450,31 @@ export default function Build() {
                       startIcon={<BuildIcon />}
                       disabled={!walletConnected}
                       sx={{
-                        background: walletConnected 
-                          ? 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)'
-                          : 'rgba(255,215,0,0.1)',
-                        color: walletConnected ? '#000' : 'rgba(255,255,255,0.5)',
+                        background: theme => walletConnected 
+                          ? theme.palette.mode === 'dark'
+                            ? 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)'
+                            : 'linear-gradient(45deg, #000000 0%, #333333 100%)'
+                          : theme.palette.mode === 'dark'
+                            ? 'rgba(255,215,0,0.1)'
+                            : 'rgba(0,0,0,0.1)',
+                        color: '#fff !important',
                         px: 4,
                         py: 1.5,
                         '&:hover': {
-                          background: walletConnected 
-                            ? 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)'
-                            : 'rgba(255,215,0,0.1)',
+                          background: theme => walletConnected 
+                            ? theme.palette.mode === 'dark'
+                              ? 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)'
+                              : 'linear-gradient(45deg, #333333 0%, #666666 100%)'
+                            : theme.palette.mode === 'dark'
+                              ? 'rgba(255,215,0,0.1)'
+                              : 'rgba(0,0,0,0.1)',
                         }
                       }}
                     >
-                      Generate with AI
+                      Build with AI
                     </Button>
                   </Box>
                 </Box>
-              </Box>
-
-              <Box sx={{ 
-                display: 'flex', 
-                gap: 1, 
-                justifyContent: 'flex-end',
-                alignItems: 'center'
-              }}>
-                <Button
-                  size="small"
-                  startIcon={<Save />}
-                  sx={{
-                    background: 'rgba(255,215,0,0.1)',
-                    color: '#FFD700',
-                    minWidth: 'auto',
-                    px: 2,
-                    py: 0.5,
-                    '&:hover': {
-                      background: 'rgba(255,215,0,0.2)'
-                    }
-                  }}
-                >
-                  Save
-                </Button>
-                <Button
-                  size="small"
-                  startIcon={<WalletIcon />}
-                  onClick={handleConnectWallet}
-                  sx={{
-                    background: walletConnected ? 'rgba(255,215,0,0.3)' : 'rgba(255,215,0,0.1)',
-                    color: '#FFD700',
-                    minWidth: 'auto',
-                    px: 2,
-                    py: 0.5,
-                    '&:hover': {
-                      background: walletConnected ? 'rgba(255,215,0,0.4)' : 'rgba(255,215,0,0.2)'
-                    }
-                  }}
-                >
-                  {walletConnected ? 'Connected' : 'Connect Wallet'}
-                </Button>
-                <Button
-                  size="small"
-                  startIcon={<Construction />}
-                  disabled={!walletConnected}
-                  sx={{
-                    background: walletConnected 
-                      ? 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)'
-                      : 'rgba(255,215,0,0.1)',
-                    color: walletConnected ? '#000' : 'rgba(255,255,255,0.5)',
-                    minWidth: 'auto',
-                    px: 2,
-                    py: 0.5,
-                    '&:hover': {
-                      background: walletConnected 
-                        ? 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)'
-                        : 'rgba(255,215,0,0.1)',
-                    }
-                  }}
-                >
-                  Build
-                </Button>
               </Box>
             </Card>
           </Grid>
@@ -526,17 +483,16 @@ export default function Build() {
           <Grid item xs={12} md={3}>
             <Card
               sx={{
-                background: 'rgba(255,255,255,0.05)',
+                background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : '#f5f5f5',
                 borderRadius: '24px',
                 p: 3,
-                border: '1px solid rgba(255,215,0,0.2)',
-                backdropFilter: 'blur(10px)',
+                border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)'}`,
                 height: '100%'
               }}
             >
               <Typography
                 sx={{
-                  color: '#fff',
+                  color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                   fontWeight: 600,
                   mb: 3,
                   fontSize: '1.1rem'
@@ -549,21 +505,21 @@ export default function Build() {
               <Box
                 sx={{
                   height: 200,
-                  background: 'rgba(255,255,255,0.05)',
+                  background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
                   borderRadius: '16px',
                   mb: 3,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: '1px dashed rgba(255,215,0,0.2)',
+                  border: theme => `1px dashed ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)'}`,
                   p: 3,
                   textAlign: 'center'
                 }}
               >
                 <Typography 
                   sx={{ 
-                    color: '#FFD700',
+                    color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000',
                     fontSize: '1.2rem',
                     fontWeight: 600,
                     mb: 2
@@ -573,7 +529,7 @@ export default function Build() {
                 </Typography>
                 <Typography 
                   sx={{ 
-                    color: 'rgba(255,255,255,0.7)',
+                    color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
                     fontSize: '0.9rem',
                     lineHeight: 1.5
                   }}
@@ -581,7 +537,6 @@ export default function Build() {
                   Your mansion preview will appear here
                 </Typography>
               </Box>
-
             </Card>
           </Grid>
         </Grid>
@@ -590,7 +545,7 @@ export default function Build() {
         <Box sx={{ mt: 8 }}>
           <Typography
             sx={{
-              color: '#fff',
+              color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
               fontWeight: 600,
               mb: 4,
               fontSize: '1.5rem',
@@ -605,16 +560,15 @@ export default function Build() {
               <Grid item xs={12} md={4} key={mansion.id}>
                 <Card
                   sx={{
-                    background: 'rgba(255,255,255,0.05)',
+                    background: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : '#f5f5f5',
                     borderRadius: '16px',
                     overflow: 'hidden',
-                    border: '1px solid rgba(255,215,0,0.2)',
-                    backdropFilter: 'blur(10px)',
+                    border: theme => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0,0,0,0.1)'}`,
                     height: '100%',
                     transition: 'transform 0.2s',
                     '&:hover': {
                       transform: 'translateY(-4px)',
-                      borderColor: 'rgba(255,215,0,0.4)'
+                      borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(0,0,0,0.2)'
                     }
                   }}
                 >
@@ -663,7 +617,7 @@ export default function Build() {
                   <Box sx={{ p: 2 }}>
                     <Typography
                       sx={{
-                        color: '#fff',
+                        color: theme => theme.palette.mode === 'dark' ? '#fff' : '#000',
                         fontWeight: 600,
                         fontSize: '1.1rem',
                         mb: 1
@@ -672,14 +626,26 @@ export default function Build() {
                       {mansion.name}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                      <LocationIcon sx={{ color: '#FFD700', fontSize: 16 }} />
-                      <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                      <LocationIcon sx={{ 
+                        color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000', 
+                        fontSize: 16 
+                      }} />
+                      <Typography sx={{ 
+                        color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', 
+                        fontSize: '0.9rem' 
+                      }}>
                         {mansion.location}
                       </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <PeopleIcon sx={{ color: '#FFD700', fontSize: 16 }} />
-                      <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                      <PeopleIcon sx={{ 
+                        color: theme => theme.palette.mode === 'dark' ? '#FFD700' : '#000', 
+                        fontSize: 16 
+                      }} />
+                      <Typography sx={{ 
+                        color: theme => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', 
+                        fontSize: '0.9rem' 
+                      }}>
                         {mansion.visitors.toLocaleString()} visitors
                       </Typography>
                     </Box>

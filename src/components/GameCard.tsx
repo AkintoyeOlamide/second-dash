@@ -27,7 +27,6 @@ export const GameCard: React.FC<GameCardProps> = ({
         width: '100%',
         maxWidth: '400px',
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(10px)',
         border: '1px solid rgba(255, 215, 0, 0.2)',
         borderRadius: '16px',
         overflow: 'hidden',

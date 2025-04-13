@@ -6,7 +6,7 @@ const Landing: React.FC = () => {
   return (
     <Box>
       {/* Trending Items Section */}
-      <Box sx={{ py: 8, background: 'rgba(0, 0, 0, 0.8)', backdropFilter: 'blur(10px)' }}>
+      <Box sx={{ py: 8, background: 'rgba(0, 0, 0, 0.8)' }}>
         <Container maxWidth="xl">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography variant="h3" sx={{ color: '#fff', mb: 2, fontWeight: 700 }}>
@@ -113,7 +113,7 @@ const Landing: React.FC = () => {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: 8, background: 'rgba(0, 0, 0, 0.8)', backdropFilter: 'blur(10px)' }}>
+      <Box sx={{ py: 8, background: 'rgba(0, 0, 0, 0.8)' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography variant="h3" sx={{ color: '#FDEB91', mb: 2, fontWeight: 700 }}>

@@ -45,6 +45,9 @@ import {
   Add as AddIcon,
   Delete as DeleteIcon,
   AccountBalanceWallet as WalletIcon,
+  FilterList,
+  Sort,
+  LocationOn,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -296,8 +299,8 @@ export default function Shop() {
 
   return (
     <Box sx={{ 
-      minHeight: '100vh', 
-      background: '#000000',
+      minHeight: '100vh',
+      background: theme.palette.background.default,
       pt: 4,
       pb: 8
     }}>
@@ -305,12 +308,11 @@ export default function Shop() {
         {/* Header with Buy Button */}
         <Box sx={{ mb: 6, position: 'relative' }}>
           <Box sx={{ 
-            display: 'flex', 
-            gap: 2, 
             position: 'absolute',
             right: 0,
             top: 0,
-            zIndex: 1
+            zIndex: 1,
+            ...(isMobile ? { display: 'none' } : { display: 'flex', gap: 2 })
           }}>
             <Button
               variant="contained"
@@ -335,11 +337,11 @@ export default function Shop() {
                 document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
               }}
               sx={{
-                color: '#FFD700',
-                borderColor: 'rgba(255,215,0,0.2)',
+                color: '#000',
+                borderColor: 'rgba(0,0,0,0.2)',
                 '&:hover': {
-                  borderColor: '#FFD700',
-                  background: 'rgba(255,215,0,0.1)'
+                  borderColor: '#000',
+                  background: 'rgba(0,0,0,0.1)'
                 }
               }}
             >
@@ -350,11 +352,11 @@ export default function Shop() {
               startIcon={<AddIcon />}
               onClick={handleItemClick}
               sx={{
-                color: '#FFD700',
-                borderColor: 'rgba(255,215,0,0.2)',
+                color: '#000',
+                borderColor: 'rgba(0,0,0,0.2)',
                 '&:hover': {
-                  borderColor: '#FFD700',
-                  background: 'rgba(255,215,0,0.1)'
+                  borderColor: '#000',
+                  background: 'rgba(0,0,0,0.1)'
                 }
               }}
             >
@@ -366,10 +368,10 @@ export default function Shop() {
             sx={{
               fontSize: { xs: '2.5rem', md: '3.5rem' },
               fontWeight: 800,
-              color: '#fff',
+              color: 'text.primary',
               mb: 2,
               letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, #FFFFFF 0%, #FDEB91 100%)',
+              background: 'linear-gradient(90deg, #000000 0%, #333333 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               textAlign: 'left'
@@ -379,19 +381,48 @@ export default function Shop() {
           </Typography>
           <Typography 
             sx={{
-              color: 'rgba(255,255,255,0.7)',
+              color: 'text.secondary',
               fontSize: '1.1rem',
               maxWidth: '600px',
-              textAlign: 'left'
+              textAlign: 'left',
+              mb: isMobile ? 3 : 0
             }}
           >
             Discover exclusive items inside Meta Mansion
           </Typography>
+          
+          {/* Mobile View Listed Items Button */}
+          {isMobile && (
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 2,
+              mt: 2
+            }}>
+              <Button
+                variant="outlined"
+                startIcon={<ShoppingBagIcon />}
+                onClick={() => {
+                  setViewTab(0);
+                  document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                sx={{
+                  color: '#000',
+                  borderColor: 'rgba(0,0,0,0.2)',
+                  '&:hover': {
+                    borderColor: '#000',
+                    background: 'rgba(0,0,0,0.1)'
+                  }
+                }}
+              >
+                View Listed Items
+              </Button>
+            </Box>
+          )}
         </Box>
 
         {/* Your Mansions Section */}
-        <Paper sx={{ p: 2, mb: 4, background: 'rgba(255, 255, 255, 0.05)' }}>
-          <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Paper sx={{ p: 2, mb: 4, background: 'rgba(0, 0, 0, 0.05)' }}>
+          <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1, color: 'text.primary' }}>
             <HomeIcon /> Your Mansions
           </Typography>
           <Grid container spacing={2}>
@@ -399,7 +430,7 @@ export default function Shop() {
               <Grid item xs={12} sm={6} md={4} key={mansion.id}>
                 <Card sx={{ 
                   height: '100%',
-                  background: 'rgba(255, 255, 255, 0.05)',
+                  background: 'rgba(0, 0, 0, 0.05)',
                   transition: 'transform 0.2s',
                   '&:hover': {
                     transform: 'translateY(-4px)',
@@ -459,9 +490,9 @@ export default function Shop() {
           sx={{ 
             p: 3, 
             mb: 4, 
-            background: 'rgba(255, 255, 255, 0.05)',
+            background: 'rgba(0, 0, 0, 0.05)',
             borderRadius: 2,
-            border: '1px solid rgba(255, 215, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.1)',
           }}
         >
           <Typography 
@@ -471,25 +502,25 @@ export default function Shop() {
               display: 'flex', 
               alignItems: 'center', 
               gap: 1,
-              color: '#FFD700',
+              color: 'text.primary',
               fontWeight: 'bold',
             }}
           >
-            <ShoppingBagIcon sx={{ color: '#FFD700' }} /> Recent Purchases
+            <ShoppingBagIcon /> Recent Purchases
           </Typography>
           <Grid container spacing={3}>
             {recentPurchases.map((purchase) => (
               <Grid item xs={12} sm={6} md={4} key={purchase.id}>
                 <Card 
                   sx={{ 
-                    background: 'rgba(0, 0, 0, 0.6)',
+                    background: 'rgba(0, 0, 0, 0.2)',
                     backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 215, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       transform: 'translateY(-4px)',
-                      boxShadow: '0 4px 20px rgba(255, 215, 0, 0.2)',
-                      border: '1px solid rgba(255, 215, 0, 0.3)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                      border: '1px solid rgba(255, 255, 255, 0.4)',
                     },
                   }}
                 >
@@ -499,9 +530,9 @@ export default function Shop() {
                       height="160"
                       image={purchase.image}
                       alt={purchase.name}
-                      sx={{ 
+                      sx={{
                         objectFit: 'cover',
-                        borderBottom: '1px solid rgba(255, 215, 0, 0.1)',
+                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
                       }}
                     />
                     <Box
@@ -510,12 +541,12 @@ export default function Shop() {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%)',
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%)',
                         p: 2,
                         pt: 4,
                       }}
                     >
-                      <Typography variant="h6" sx={{ color: '#FFD700', fontWeight: 'bold' }}>
+                      <Typography variant="h6" sx={{ color: '#fff', fontWeight: 'bold' }}>
                         {purchase.price}
                       </Typography>
                     </Box>
@@ -526,9 +557,7 @@ export default function Shop() {
                       sx={{ 
                         fontWeight: 'bold',
                         mb: 1,
-                        background: 'linear-gradient(90deg, #FFFFFF 0%, #FFD700 100%)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
+                        color: '#fff',
                       }}
                     >
                       {purchase.name}
@@ -543,7 +572,7 @@ export default function Shop() {
                           gap: 1,
                         }}
                       >
-                        <HomeIcon sx={{ fontSize: 16 }} />
+                        <HomeIcon sx={{ fontSize: 16, color: 'rgba(255,255,255,0.7)' }} />
                         {purchase.mansion}
                       </Typography>
                       <Typography 
@@ -555,7 +584,7 @@ export default function Shop() {
                           gap: 1,
                         }}
                       >
-                        <TimerIcon sx={{ fontSize: 16 }} />
+                        <TimerIcon sx={{ fontSize: 16, color: 'rgba(255,255,255,0.7)' }} />
                         {purchase.date}
                       </Typography>
                     </Box>
@@ -568,12 +597,13 @@ export default function Shop() {
 
         {/* Categories */}
         <Paper 
-          sx={{ 
-            p: 3, 
-            mb: 4, 
-            background: 'rgba(255, 255, 255, 0.05)',
+          sx={{
+            p: 3,
+            mb: 4,
+            background: 'rgba(0, 0, 0, 0.05)',
             borderRadius: 2,
-            border: '1px solid rgba(255, 215, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.1)',
+            boxShadow: 'none'
           }}
         >
           <Typography 
@@ -583,11 +613,11 @@ export default function Shop() {
               display: 'flex', 
               alignItems: 'center', 
               gap: 1,
-              color: '#FFD700',
+              color: 'text.primary',
               fontWeight: 'bold',
             }}
           >
-            <CategoryIcon sx={{ color: '#FFD700' }} /> Categories
+            <CategoryIcon /> Categories
           </Typography>
           <Grid container spacing={2}>
             {categories.map((category) => (
@@ -598,8 +628,8 @@ export default function Shop() {
                     navigate('/list-item', { state: { category: category.name } });
                   }}
                   sx={{
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 215, 0, 0.1)',
+                    background: 'rgba(0, 0, 0, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                     '&:hover': {
@@ -614,7 +644,7 @@ export default function Shop() {
                     <Typography 
                       variant="h6" 
                       sx={{ 
-                        color: '#FFD700',
+                        color: '#fff',
                         fontWeight: 'bold',
                       }}
                     >
@@ -632,9 +662,9 @@ export default function Shop() {
           sx={{ 
             p: 3, 
             mb: 4, 
-            background: 'rgba(255, 255, 255, 0.05)',
+            background: 'rgba(0, 0, 0, 0.05)',
             borderRadius: 2,
-            border: '1px solid rgba(255, 215, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.1)',
           }}
         >
           <Typography 
@@ -644,11 +674,11 @@ export default function Shop() {
               display: 'flex', 
               alignItems: 'center', 
               gap: 1,
-              color: '#FFD700',
+              color: 'text.primary',
               fontWeight: 'bold',
             }}
           >
-            <TrendingIcon sx={{ color: '#FFD700' }} /> Trending Items
+            <TrendingIcon /> Trending Items
           </Typography>
           <Grid container spacing={2}>
             {trendingItems.map((item) => (
@@ -657,7 +687,7 @@ export default function Shop() {
                   onClick={handleItemClick}
                   sx={{ 
                     height: '100%',
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    background: 'rgba(0, 0, 0, 0.05)',
                     transition: 'transform 0.2s',
                     cursor: 'pointer',
                     '&:hover': {
@@ -710,8 +740,8 @@ export default function Shop() {
         </Paper>
 
         {/* Enter Meta Mansion Section */}
-        <Paper sx={{ p: 2, mb: 4, background: 'rgba(255, 255, 255, 0.05)' }}>
-          <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Paper sx={{ p: 2, mb: 4, background: 'rgba(0, 0, 0, 0.05)' }}>
+          <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1, color: 'text.primary' }}>
             <HomeIcon /> Enter Meta Mansion
           </Typography>
           <Grid container spacing={2}>
@@ -719,7 +749,7 @@ export default function Shop() {
               <Grid item xs={12} sm={6} md={4} key={mansion.id}>
                 <Card sx={{ 
                   height: '100%',
-                  background: 'rgba(255, 255, 255, 0.05)',
+                  background: 'rgba(0, 0, 0, 0.05)',
                   transition: 'all 0.3s ease',
                   '&:hover': {
                     transform: 'translateY(-4px)',
@@ -776,281 +806,15 @@ export default function Shop() {
           </Grid>
         </Paper>
 
-        {/* Item Dialog */}
-        <Dialog
-          open={itemDialogOpen}
-          onClose={handleItemDialogClose}
-          maxWidth="md"
-          fullWidth
-          PaperProps={{
-            sx: {
-              background: 'rgba(0,0,0,0.95)',
-              border: '1px solid rgba(255,215,0,0.2)',
-              backdropFilter: 'blur(10px)',
-              color: '#fff',
-              position: 'relative',
-              margin: '32px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }
-          }}
-          BackdropProps={{
-            sx: {
-              backdropFilter: 'blur(8px)',
-              backgroundColor: 'rgba(0, 0, 0, 0.7)'
-            }
-          }}
-        >
-          <DialogTitle sx={{ 
-            color: '#FFD700', 
-            fontWeight: 'bold',
-            textAlign: 'center',
-            width: '100%',
-            pb: 2
-          }}>
-            List Your Item
-          </DialogTitle>
-          <DialogContent sx={{ width: '100%', maxWidth: '800px' }}>
-            <Stack spacing={3} sx={{ mt: 2 }}>
-              <Typography variant="h6" sx={{ color: '#FFD700', mb: 2 }}>Item Details</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Item Name"
-                    fullWidth
-                    value={newItem.name}
-                    onChange={handleItemChange('name')}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        color: '#fff',
-                        '& fieldset': {
-                          borderColor: 'rgba(255,215,0,0.2)',
-                        },
-                        '&:hover fieldset': {
-                          borderColor: 'rgba(255,215,0,0.4)',
-                        },
-                      },
-                      '& .MuiInputLabel-root': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Box sx={{ mb: 1 }}>
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1 }}>
-                      Upload Image
-                    </Typography>
-                    <Button
-                      variant="outlined"
-                      component="label"
-                      fullWidth
-                      sx={{
-                        borderColor: 'rgba(255,215,0,0.2)',
-                        color: '#FFD700',
-                        '&:hover': {
-                          borderColor: '#FFD700',
-                          background: 'rgba(255,215,0,0.1)'
-                        }
-                      }}
-                    >
-                      Choose File
-                      <input
-                        type="file"
-                        hidden
-                        accept="image/*"
-                        onChange={handleImageChange}
-                      />
-                    </Button>
-                    {newItem.image && (
-                      <Typography variant="body2" sx={{ color: '#FFD700', mt: 1 }}>
-                        Selected: {newItem.image.name}
-                      </Typography>
-                    )}
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Description"
-                    fullWidth
-                    multiline
-                    rows={4}
-                    value={newItem.description}
-                    onChange={handleItemChange('description')}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        color: '#fff',
-                        '& fieldset': {
-                          borderColor: 'rgba(255,215,0,0.2)',
-                        },
-                        '&:hover fieldset': {
-                          borderColor: 'rgba(255,215,0,0.4)',
-                        },
-                      },
-                      '& .MuiInputLabel-root': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Price (ETH)"
-                    fullWidth
-                    type="number"
-                    value={newItem.price}
-                    onChange={handleItemChange('price')}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        color: '#fff',
-                        '& fieldset': {
-                          borderColor: 'rgba(255,215,0,0.2)',
-                        },
-                        '&:hover fieldset': {
-                          borderColor: 'rgba(255,215,0,0.4)',
-                        },
-                      },
-                      '& .MuiInputLabel-root': {
-                        color: 'rgba(255,255,255,0.7)',
-                      },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h6" sx={{ color: '#FFD700', mb: 2 }}>Select Category</Typography>
-                  <Grid container spacing={1}>
-                    {categories.map((category) => (
-                      <Grid item xs={6} sm={4} md={2} key={category.name}>
-                        <Card
-                          onClick={() => setNewItem(prev => ({ ...prev, category: category.name }))}
-                          sx={{
-                            background: newItem.category === category.name 
-                              ? 'rgba(255, 215, 0, 0.1)' 
-                              : 'rgba(255, 255, 255, 0.05)',
-                            border: `1px solid ${newItem.category === category.name 
-                              ? 'rgba(255, 215, 0, 0.3)' 
-                              : 'rgba(255, 215, 0, 0.1)'}`,
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                              transform: 'translateY(-2px)',
-                              border: '1px solid rgba(255, 215, 0, 0.3)',
-                              background: 'rgba(255, 215, 0, 0.1)',
-                            },
-                          }}
-                        >
-                          <CardContent sx={{ textAlign: 'center', py: 1.5 }}>
-                            <Typography variant="h4" sx={{ mb: 0.5 }}>{category.icon}</Typography>
-                            <Typography 
-                              variant="body2" 
-                              sx={{ 
-                                color: '#FFD700',
-                                fontWeight: 'bold',
-                              }}
-                            >
-                              {category.name}
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Stack>
-          </DialogContent>
-          <DialogActions sx={{ p: 3, pt: 0 }}>
-            <Button 
-              onClick={handleItemDialogClose}
-              sx={{ color: 'rgba(255,255,255,0.7)' }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleSaveItem}
-              disabled={!newItem.name || !newItem.image || !newItem.description || !newItem.price || !newItem.category}
-              sx={{
-                background: 'linear-gradient(45deg, #FFD700 30%, #FFA500 90%)',
-                color: '#000',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #FFA500 30%, #FFD700 90%)',
-                },
-                '&.Mui-disabled': {
-                  background: 'rgba(255,215,0,0.1)',
-                  color: 'rgba(255,255,255,0.5)',
-                },
-              }}
-            >
-              List Item
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        {/* Buy Mansion Dialog */}
-        <Dialog
-          open={buyMansionOpen}
-          onClose={handleBuyMansionClose}
-          maxWidth="sm"
-          fullWidth
-          PaperProps={{
-            sx: {
-              background: 'rgba(0,0,0,0.95)',
-              border: '1px solid rgba(255,215,0,0.2)',
-              backdropFilter: 'blur(10px)',
-              color: '#fff'
-            }
-          }}
-        >
-          <DialogTitle>Buy a Meta Mansion</DialogTitle>
-          <DialogContent>
-            <Stack spacing={2} sx={{ mt: 2 }}>
-              <TextField
-                label="Mansion Name"
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Location"
-                fullWidth
-                variant="outlined"
-              />
-              <TextField
-                label="Price (ETH)"
-                fullWidth
-                variant="outlined"
-                type="number"
-              />
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleBuyMansionClose}>Cancel</Button>
-            <Button
-              variant="contained"
-              sx={{
-                background: 'linear-gradient(45deg, #FFD700 30%, #FFA500 90%)',
-                color: '#000',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #FFA500 30%, #FFD700 90%)',
-                },
-              }}
-            >
-              Purchase
-            </Button>
-          </DialogActions>
-        </Dialog>
-
         {/* Listed Items Section */}
         <Paper 
           id="listed-items-section"
           sx={{ 
             p: 3, 
             mb: 4, 
-            background: 'rgba(255, 255, 255, 0.05)',
+            background: 'rgba(0, 0, 0, 0.05)',
             borderRadius: 2,
-            border: '1px solid rgba(255, 215, 0, 0.1)',
+            border: '1px solid rgba(0, 0, 0, 0.1)',
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
@@ -1060,22 +824,22 @@ export default function Shop() {
                 display: 'flex', 
                 alignItems: 'center', 
                 gap: 1,
-                color: '#FFD700',
+                color: 'text.primary',
                 fontWeight: 'bold',
               }}
             >
-              <ShoppingBagIcon sx={{ color: '#FFD700' }} /> Listed Items
+              <ShoppingBagIcon /> Listed Items
             </Typography>
             <Button
               variant="outlined"
               startIcon={<AddIcon />}
               onClick={handleItemClick}
               sx={{
-                color: '#FFD700',
-                borderColor: 'rgba(255,215,0,0.2)',
+                color: '#000',
+                borderColor: 'rgba(0,0,0,0.2)',
                 '&:hover': {
-                  borderColor: '#FFD700',
-                  background: 'rgba(255,215,0,0.1)'
+                  borderColor: '#000',
+                  background: 'rgba(0,0,0,0.1)'
                 }
               }}
             >
@@ -1089,13 +853,13 @@ export default function Shop() {
             sx={{
               mb: 3,
               '& .MuiTab-root': {
-                color: 'rgba(255,255,255,0.7)',
+                color: 'rgba(0,0,0,0.5)',
                 '&.Mui-selected': {
-                  color: '#FFD700',
+                  color: '#000',
                 },
               },
               '& .MuiTabs-indicator': {
-                backgroundColor: '#FFD700',
+                backgroundColor: '#000',
               },
             }}
           >
@@ -1111,7 +875,7 @@ export default function Shop() {
                   <Card 
                     sx={{ 
                       height: '100%',
-                      background: 'rgba(255, 255, 255, 0.05)',
+                      background: 'rgba(0, 0, 0, 0.05)',
                       transition: 'transform 0.2s',
                       '&:hover': {
                         transform: 'translateY(-4px)',
@@ -1166,7 +930,7 @@ export default function Shop() {
                   <Card 
                     sx={{ 
                       height: '100%',
-                      background: 'rgba(255, 255, 255, 0.05)',
+                      background: 'rgba(0, 0, 0, 0.05)',
                       transition: 'transform 0.2s',
                       position: 'relative',
                       '&:hover': {
