@@ -55,10 +55,10 @@ import { useNavigate } from 'react-router-dom';
 const trendingItems = [
   {
     id: 1,
-    name: 'Luxury Sports Car',
-    category: 'Vehicles',
-    price: '25.5 ETH',
-    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+    name: 'Cyber Punk NFT',
+    category: 'Digital Art',
+    price: '0.00 ETH',
+    image: '/nft1.avif',
     rating: 4.8,
     sales: 156,
     timeLeft: '2 days',
@@ -66,10 +66,10 @@ const trendingItems = [
   },
   {
     id: 2,
-    name: 'Designer Suit',
-    category: 'Fashion',
-    price: '3.2 ETH',
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80',
+    name: 'Abstract Dreams',
+    category: 'Digital Art',
+    price: '0.00 ETH',
+    image: '/nft2.avif',
     rating: 4.6,
     sales: 89,
     timeLeft: '1 day',
@@ -77,15 +77,48 @@ const trendingItems = [
   },
   {
     id: 3,
-    name: 'Smart Watch',
-    category: 'Gadgets',
-    price: '1.8 ETH',
-    image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80',
+    name: 'Neon Genesis',
+    category: 'Digital Art',
+    price: '0.00 ETH',
+    image: '/nft3.avif',
     rating: 4.9,
     sales: 234,
     timeLeft: '3 days',
     discount: '10% OFF',
   },
+  {
+    id: 4,
+    name: 'Future Vision',
+    category: 'Digital Art',
+    price: '0.00 ETH',
+    image: '/nft4.webp',
+    rating: 4.7,
+    sales: 178,
+    timeLeft: '4 days',
+    discount: '12% OFF',
+  },
+  {
+    id: 5,
+    name: 'Digital Dreamscape',
+    category: 'Digital Art',
+    price: '0.00 ETH',
+    image: '/nft5.webp',
+    rating: 4.9,
+    sales: 203,
+    timeLeft: '1 day',
+    discount: '18% OFF',
+  },
+  {
+    id: 6,
+    name: 'Quantum Realm',
+    category: 'Digital Art',
+    price: '0.00 ETH',
+    image: '/nft6.avif',
+    rating: 4.8,
+    sales: 167,
+    timeLeft: '2 days',
+    discount: '15% OFF',
+  }
 ];
 
 // Rare items
@@ -220,27 +253,27 @@ const ownedMansions = [
 const recentPurchases = [
   {
     id: 1,
-    name: 'Luxury Car',
+    name: 'Cyber Realm',
     mansion: 'Crystal Palace #4721',
-    price: '25.5 ETH',
+    price: '0.00 ETH',
     date: '2024-03-15',
-    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+    image: '/nft7.avif',
   },
   {
     id: 2,
-    name: 'Designer Furniture',
+    name: 'Digital Horizon',
     mansion: 'Sky Villa #8392',
-    price: '12.8 ETH',
+    price: '0.00 ETH',
     date: '2024-03-14',
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80',
+    image: '/nft8.avif',
   },
   {
     id: 3,
-    name: 'Smart Home System',
+    name: 'Virtual Oasis',
     mansion: 'Ocean View #6153',
-    price: '18.5 ETH',
+    price: '0.00 ETH',
     date: '2024-03-13',
-    image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80',
+    image: '/nft9.avif',
   },
 ];
 
@@ -299,112 +332,105 @@ export default function Shop() {
 
   return (
     <Box sx={{ 
+      px: isMobile ? 1 : 2, 
+      py: 0,
+      backgroundColor: theme.palette.background.default,
       minHeight: '100vh',
-      background: theme.palette.background.default,
-      pt: 4,
-      pb: 8
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 0,
+      mt: 8
     }}>
-      <Container maxWidth="xl">
-        {/* Header with Buy Button */}
-        <Box sx={{ mb: 6, position: 'relative' }}>
-          <Box sx={{ 
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            zIndex: 1,
-            ...(isMobile ? { display: 'none' } : { display: 'flex', gap: 2 })
-          }}>
-            <Button
-              variant="contained"
-              onClick={handleBuyMansionOpen}
-              startIcon={<AddIcon />}
+      <Container maxWidth="xl" sx={{ 
+        px: { xs: 2, sm: 3, md: 4 },
+        '& .MuiCard-root': {
+          background: theme.palette.background.paper,
+          color: theme.palette.text.primary,
+          border: `1px solid ${theme.palette.divider}`,
+          '&:hover': {
+            borderColor: theme.palette.primary.main,
+          }
+        },
+        '& .MuiTypography-root': {
+          color: theme.palette.text.primary
+        }
+      }}>
+        {/* Hero Section */}
+        <Box sx={{ 
+          mb: { xs: 1, sm: 2 },
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: 'space-between',
+          alignItems: { xs: 'flex-start', sm: 'center' },
+          gap: { xs: 3, sm: 4 },
+          flexWrap: 'wrap',
+          width: '100%',
+          overflow: 'hidden'
+        }}>
+          <Box sx={{ flex: 1, width: '100%', overflow: 'hidden' }}>
+            <Typography 
+              variant="h1" 
               sx={{
-                background: 'linear-gradient(45deg, #FFD700 30%, #FFA500 90%)',
-                color: '#000',
-                fontWeight: 'bold',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #FFA500 30%, #FFD700 90%)',
-                },
+                fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                fontWeight: 800,
+                color: theme.palette.mode === 'dark' ? '#FDEB91' : '#000000',
+                mb: 2,
+                letterSpacing: '-0.02em',
+                whiteSpace: 'normal',
+                overflow: 'visible',
+                textOverflow: 'clip',
+                width: '100%',
+                maxWidth: 'none',
+                wordBreak: 'normal'
               }}
             >
-              Buy a Meta Mansion
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<ShoppingBagIcon />}
-              onClick={() => {
-                setViewTab(0);
-                document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              Shopping
+            </Typography>
+            <Typography 
               sx={{
-                color: '#000',
-                borderColor: 'rgba(0,0,0,0.2)',
-                '&:hover': {
-                  borderColor: '#000',
-                  background: 'rgba(0,0,0,0.1)'
-                }
+                color: 'text.secondary',
+                fontSize: '1.1rem',
+                maxWidth: '600px',
+                textAlign: 'left',
+                mb: isMobile ? 3 : 0
               }}
             >
-              View Listed Items
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={handleItemClick}
-              sx={{
-                color: '#000',
-                borderColor: 'rgba(0,0,0,0.2)',
-                '&:hover': {
-                  borderColor: '#000',
-                  background: 'rgba(0,0,0,0.1)'
-                }
-              }}
-            >
-              List New Item
-            </Button>
+              Discover exclusive items inside Meta Mansion
+            </Typography>
           </Box>
-          <Typography 
-            variant="h1" 
-            sx={{
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
-              fontWeight: 800,
-              color: 'text.primary',
-              mb: 2,
-              letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, #000000 0%, #333333 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              textAlign: 'left'
-            }}
-          >
-            Shopping
-          </Typography>
-          <Typography 
-            sx={{
-              color: 'text.secondary',
-              fontSize: '1.1rem',
-              maxWidth: '600px',
-              textAlign: 'left',
-              mb: isMobile ? 3 : 0
-            }}
-          >
-            Discover exclusive items inside Meta Mansion
-          </Typography>
           
-          {/* Mobile View Listed Items Button */}
-          {isMobile && (
+          <Box sx={{ 
+            position: 'relative',
+            width: '100%',
+            overflow: 'hidden',
+            ...(isMobile ? { mt: 2 } : { flex: 1 })
+          }}>
             <Box sx={{ 
-              display: 'flex', 
-              gap: 2,
-              mt: 2
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              zIndex: 1,
+              ...(isMobile ? { display: 'none' } : { display: 'flex', gap: 2 })
             }}>
               <Button
-                variant="outlined"
-                startIcon={<ShoppingBagIcon />}
-                onClick={() => {
-                  setViewTab(0);
-                  document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
+                variant="contained"
+                onClick={handleBuyMansionOpen}
+                startIcon={<AddIcon />}
+                sx={{
+                  background: 'linear-gradient(45deg, #FFD700 30%, #FFA500 90%)',
+                  color: '#000',
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    background: 'linear-gradient(45deg, #FFA500 30%, #FFD700 90%)',
+                  },
                 }}
+              >
+                Buy a Meta Mansion
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={handleItemClick}
                 sx={{
                   color: '#000',
                   borderColor: 'rgba(0,0,0,0.2)',
@@ -414,15 +440,21 @@ export default function Shop() {
                   }
                 }}
               >
-                View Listed Items
+                List New Item
               </Button>
             </Box>
-          )}
+          </Box>
         </Box>
 
         {/* Your Mansions Section */}
         <Paper sx={{ p: 2, mb: 4, background: 'rgba(0, 0, 0, 0.05)' }}>
-          <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1, color: 'text.primary' }}>
+          <Typography variant="h6" sx={{ 
+            mb: 2, 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1, 
+            color: theme.palette.mode === 'dark' ? '#FFFFFF' : 'text.primary' 
+          }}>
             <HomeIcon /> Your Mansions
           </Typography>
           <Grid container spacing={2}>
@@ -853,13 +885,13 @@ export default function Shop() {
             sx={{
               mb: 3,
               '& .MuiTab-root': {
-                color: 'rgba(0,0,0,0.5)',
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.5)',
                 '&.Mui-selected': {
-                  color: '#000',
+                  color: theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
                 },
               },
               '& .MuiTabs-indicator': {
-                backgroundColor: '#000',
+                backgroundColor: theme.palette.mode === 'dark' ? '#FFFFFF' : '#000000',
               },
             }}
           >

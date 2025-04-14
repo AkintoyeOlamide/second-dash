@@ -38,6 +38,7 @@ import {
   SportsEsports as GameIcon,
   MoreVert as MoreIcon,
 } from '@mui/icons-material';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 export {};
 
@@ -180,6 +181,9 @@ export default function Friends() {
     shareLink: ''
   });
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
@@ -244,19 +248,19 @@ export default function Friends() {
               Community
             </Typography>
             <Typography 
-              sx={{ 
-                color: 'rgba(255,255,255,0.7)',
-                fontSize: { xs: '0.7rem', sm: '1.1rem' },
+              sx={{
+                color: theme.palette.mode === 'dark' ? '#FFFFFF' : 'text.secondary',
+                fontSize: '1.1rem',
                 maxWidth: '600px',
-                textAlign: 'left'
+                textAlign: 'left',
+                mb: isMobile ? 3 : 0
               }}
             >
-              Connect with other mansion owners and join exclusive communities
+              Connect with friends and join communities
             </Typography>
           </Box>
           <Button
             variant="contained"
-            startIcon={<CommunityIcon />}
             onClick={handleCreateCommunityOpen}
             sx={{
               background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)',
@@ -265,6 +269,7 @@ export default function Friends() {
               px: 1,
               py: 0.5,
               fontSize: { xs: '0.7rem', sm: '0.75rem' },
+              ml: 4,
               '&:hover': {
                 background: 'linear-gradient(45deg, #FFC700 0%, #FF9500 100%)',
               }
@@ -495,8 +500,8 @@ export default function Friends() {
         onClose={handleCreateCommunityClose}
         PaperProps={{
           sx: {
-            background: 'rgba(0, 0, 0, 0.7)',
-            border: '1px solid rgba(255, 215, 0, 0.2)',
+            background: theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.7)' : '#ffffff',
+            border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 0, 0, 0.1)'}`,
             borderRadius: 2,
             minWidth: '300px',
             position: 'fixed',
@@ -509,7 +514,12 @@ export default function Friends() {
           }
         }}
       >
-        <DialogTitle>Create New Community</DialogTitle>
+        <DialogTitle sx={{ 
+          color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
+          borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 0, 0, 0.1)'}`
+        }}>
+          Create New Community
+        </DialogTitle>
         <DialogContent>
           <Stack spacing={3} sx={{ mt: 2 }}>
             <TextField
@@ -519,21 +529,21 @@ export default function Friends() {
               onChange={(e) => setCommunityForm({ ...communityForm, name: e.target.value })}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  color: '#fff',
+                  color: theme.palette.mode === 'dark' ? '#fff' : '#000',
                   '& fieldset': {
-                    borderColor: 'rgba(255,215,0,0.2)',
+                    borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.1)',
                   },
                   '&:hover fieldset': {
-                    borderColor: 'rgba(255,215,0,0.4)',
+                    borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(0, 0, 0, 0.3)',
                   },
                   '&.Mui-focused fieldset': {
-                    borderColor: '#FFD700',
+                    borderColor: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                   },
                 },
                 '& .MuiInputLabel-root': {
-                  color: 'rgba(255,255,255,0.7)',
+                  color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0, 0, 0, 0.6)',
                   '&.Mui-focused': {
-                    color: '#FFD700',
+                    color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                   },
                 },
               }}
@@ -548,28 +558,28 @@ export default function Friends() {
               onChange={(e) => setCommunityForm({ ...communityForm, description: e.target.value })}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  color: '#fff',
+                  color: theme.palette.mode === 'dark' ? '#fff' : '#000',
                   '& fieldset': {
-                    borderColor: 'rgba(255,215,0,0.2)',
+                    borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.1)',
                   },
                   '&:hover fieldset': {
-                    borderColor: 'rgba(255,215,0,0.4)',
+                    borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(0, 0, 0, 0.3)',
                   },
                   '&.Mui-focused fieldset': {
-                    borderColor: '#FFD700',
+                    borderColor: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                   },
                 },
                 '& .MuiInputLabel-root': {
-                  color: 'rgba(255,255,255,0.7)',
+                  color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0, 0, 0, 0.6)',
                   '&.Mui-focused': {
-                    color: '#FFD700',
+                    color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
                   },
                 },
               }}
             />
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Typography sx={{ color: 'rgba(255,255,255,0.7)' }}>
+              <Typography sx={{ color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0, 0, 0, 0.6)' }}>
                 Community Type:
               </Typography>
               <Button
@@ -625,18 +635,12 @@ export default function Friends() {
               }}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  color: '#fff',
+                  color: theme.palette.mode === 'dark' ? '#fff' : '#000',
                   '& fieldset': {
-                    borderColor: 'rgba(255,215,0,0.2)',
+                    borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.1)',
                   },
                   '&:hover fieldset': {
-                    borderColor: 'rgba(255,215,0,0.4)',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(255,255,255,0.7)',
-                  '&.Mui-focused': {
-                    color: '#FFD700',
+                    borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(0, 0, 0, 0.3)',
                   },
                 },
               }}

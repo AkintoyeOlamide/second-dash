@@ -125,7 +125,7 @@ const HomeVisitors: React.FC = () => {
       display: 'flex',
       flexDirection: 'column',
       gap: 0,
-      mt: 6
+      mt: 8
     }}>
       <Container sx={{ 
         position: 'relative', 
@@ -177,12 +177,15 @@ const HomeVisitors: React.FC = () => {
                   autoPlay
                   loop
                   muted
+                  playsInline
+                  preload="auto"
                   style={{
                     position: 'absolute',
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    zIndex: -1
+                    zIndex: -1,
+                    transition: 'opacity 0.5s ease-in-out'
                   }}
                 >
                   <source src={item.video} type="video/mp4" />

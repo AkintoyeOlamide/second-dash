@@ -101,13 +101,8 @@ export const Layout: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentStatsIndex, setCurrentStatsIndex] = useState(0);
-  const [walletConnected, setWalletConnected] = useState(false);
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
-  const isProfilePage = location.pathname === '/profile';
-  const isPlayPage = location.pathname === '/play';
-  const isBuildPage = location.pathname === '/build';
-  const isShopPage = location.pathname === '/shop';
   const isLandingPage = location.pathname === '/';
 
   // Auto-update stats every 3 seconds
@@ -133,7 +128,6 @@ export const Layout: React.FC = () => {
   };
 
   const handleConnectWallet = () => {
-    setWalletConnected(!walletConnected);
     // Add your wallet connection logic here
   };
 
@@ -216,6 +210,21 @@ export const Layout: React.FC = () => {
           background: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
           pt: { xs: '40px', sm: 0 },
           px: { xs: 2, sm: 3 },
+          position: 'relative',
+          zIndex: 1,
+          overflow: 'auto',
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)',
+          willChange: 'transform',
+          filter: 'none',
+          opacity: 1,
+          '& *': {
+            backdropFilter: 'none !important',
+            WebkitBackdropFilter: 'none !important',
+            filter: 'none !important'
+          }
         }}
       >
         {/* Show stats and carousel only on the landing page and when authenticated */}

@@ -574,9 +574,9 @@ export default function Shop() {
       display: 'flex',
       flexDirection: 'column',
       gap: 0,
-      mt: 6
+      mt: 8
     }}>
-      <Container maxWidth="xl" sx={{
+      <Container maxWidth="xl" sx={{ 
         px: { xs: 2, sm: 3, md: 4 },
         '& .MuiCard-root': {
           background: theme.palette.background.paper,
@@ -588,91 +588,59 @@ export default function Shop() {
         },
         '& .MuiTypography-root': {
           color: theme.palette.text.primary
-        },
-        '& .MuiChip-root': {
-          background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-          color: theme.palette.text.primary
         }
       }}>
-        {/* Header with Buy Button */}
-        <Box sx={{ mb: 6, position: 'relative' }}>
-          <Box sx={{ 
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            zIndex: 1,
-            ...(isMobile ? { display: 'none' } : { display: 'flex', gap: 2 })
-          }}>
-            <Button
-              variant="outlined"
-              startIcon={<ShoppingBagIcon />}
-              onClick={() => {
-                setViewTab(0);
-                document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+        {/* Hero Section */}
+        <Box sx={{ 
+          mb: { xs: 4, sm: 8 },
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: 'space-between',
+          alignItems: { xs: 'flex-start', sm: 'center' },
+          gap: { xs: 3, sm: 4 },
+          flexWrap: 'wrap',
+          width: '100%',
+          overflow: 'hidden'
+        }}>
+          <Box sx={{ flex: 1, width: '100%', overflow: 'hidden' }}>
+            <Typography 
+              variant="h1" 
               sx={{
-                color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
-                borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.2)',
-                '&:hover': {
-                  borderColor: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
-                  background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.05)'
-                }
+                fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                fontWeight: 800,
+                color: theme.palette.mode === 'dark' ? '#FDEB91' : '#000000',
+                mb: 2,
+                letterSpacing: '-0.02em',
+                whiteSpace: 'normal',
+                overflow: 'visible',
+                textOverflow: 'clip',
+                width: '100%',
+                maxWidth: 'none',
+                wordBreak: 'normal'
               }}
             >
-              View Listed Items
-            </Button>
+              Shopping
+            </Typography>
+            <Typography 
+              sx={{
+                color: 'text.secondary',
+                fontSize: '1.1rem',
+                maxWidth: '600px',
+                textAlign: 'left',
+                mb: isMobile ? 3 : 0
+              }}
+            >
+              Discover exclusive items inside Meta Mansion
+            </Typography>
           </Box>
-          <Typography 
-            variant="h4" 
-            sx={{ 
-              color: '#FCC200',
-              mb: isMobile ? 2 : 3, 
-              fontWeight: 800, 
-              fontSize: isMobile ? '1.5rem' : '2rem',
-              px: isMobile ? 1 : 0
-            }}
-          >
-            Shopping
-          </Typography>
-          <Typography 
-            sx={{
-              color: 'rgba(255,255,255,0.7)',
-              fontSize: '1.1rem',
-              maxWidth: '600px',
-              textAlign: 'left',
-              mb: isMobile ? 3 : 0
-            }}
-          >
-            Discover exclusive items inside Meta Mansion
-          </Typography>
           
-          {/* Mobile View Listed Items Button */}
-          {isMobile && (
-            <Box sx={{ 
-              display: 'flex', 
-              gap: 2,
-              mt: 2
-            }}>
-              <Button
-                variant="outlined"
-                startIcon={<ShoppingBagIcon />}
-                onClick={() => {
-                  setViewTab(0);
-                  document.getElementById('listed-items-section')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                sx={{
-                  color: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
-                  borderColor: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.2)' : 'rgba(0, 0, 0, 0.2)',
-                  '&:hover': {
-                    borderColor: theme.palette.mode === 'dark' ? '#FFD700' : '#000000',
-                    background: theme.palette.mode === 'dark' ? 'rgba(255,215,0,0.1)' : 'rgba(0, 0, 0, 0.05)'
-                  }
-                }}
-              >
-                View Listed Items
-              </Button>
-            </Box>
-          )}
+          <Box sx={{ 
+            position: 'relative',
+            width: '100%',
+            overflow: 'hidden',
+            ...(isMobile ? { mt: 2 } : { flex: 1 })
+          }}>
+          </Box>
         </Box>
 
         {/* Mansions Grid */}

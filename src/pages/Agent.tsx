@@ -222,6 +222,8 @@ const Agent: React.FC = () => {
                 justifyContent: 'center',
                 bgcolor: theme => theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
                 ml: { md: -3 },
+                mt: 4,
+                mb: 4
               }}
             >
               {/* Carousel Content */}

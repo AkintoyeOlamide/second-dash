@@ -139,7 +139,7 @@ export default function Play() {
       display: 'flex',
       flexDirection: 'column',
       gap: 0,
-      mt: 6
+      mt: 8
     }}>
       <Container 
         maxWidth="xl" 
@@ -257,7 +257,7 @@ export default function Play() {
                     ml: 2
                   }}
                 >
-                  0.00 ETH
+                  0.00
                 </Typography>
               </Box>
             </Card>
